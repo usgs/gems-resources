@@ -4,16 +4,15 @@
 
 Most of the files in this repository were formally distributed within the 'Resources' folder of the GeMS Tools ArcGIS geoprocessing toolbox, which is available for [ArcMap](https://github.com/usgs/gems-tools-arcmap) and [ArcGIS Pro](https://github.com/usgs/gems-tools-pro). To avoid the redundant downloading of files in the case where both versions of the toolbox were required and because these files do not need to be versioned in the same way that the tool scripts do, they have been separated from the toolbox.
 
+## Submission
+* [GeMS Checklist.pdf](https://github.com/usgs/gems-resources/raw/main/GeMS%20checklist.pdf) — PDF form to help with the collection of items before submitting a GeMS database to the National Geologic Map Database ([NGMDB](https://ngmdb.usgs.gov/ngmdb/ngmdb_home.html)) or [STATEMAP](https://www.usgs.gov/core-science-systems/national-cooperative-geologic-mapping-program/science/statemap?qt-science_center_objects=0#qt-science_center_objects)
+
 ## Documentation
 * [tm11b10.pdf](https://github.com/usgs/gems-resources/raw/main/tm11b10.pdf) — Current version of the GeMS standard
 * [GeoMaterials.xlsx](https://github.com/usgs/gems-resources/raw/main/GeoMaterials.xlsx) — terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form.
 
-## Submission
-* [GeMS Checklist.pdf](https://github.com/usgs/gems-resources/raw/main/GeMS%20checklist.pdf) — PDF form to help with the collection of items before submitting a GeMS database to the National Geologic Map Database ([NGMDB](https://ngmdb.usgs.gov/ngmdb/ngmdb_home.html)) or [STATEMAP](https://www.usgs.gov/core-science-systems/national-cooperative-geologic-mapping-program/science/statemap?qt-science_center_objects=0#qt-science_center_objects)
-
 ## [FGDC](https://pubs.usgs.gov/tm/2006/11A02/) Symbol documentation
 * [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) - 
-
 
 ## Font files
 * [FGDCGeoAge.otf](https://github.com/usgs/gems-resources/raw/main/FGDCGeoAge.otf) — OpenType version of special geologic age characters.
