@@ -6,7 +6,7 @@ The files in this repository were formally distributed within the 'Resources' fo
 
 ## Documentation
 * [tm11b10.pdf](https://github.com/usgs/gems-resources/raw/main/tm11b10.pdf) (Current version of the GeMS standard)
-* [GeoMaterials](https://github.com/usgs/gems-resources/raw/main/GeoMaterials.xlsx) — terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form.
+* [GeoMaterials.xlsx](https://github.com/usgs/gems-resources/raw/main/GeoMaterials.xlsx) — terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form.
 
 ## Font files
 * [FGDCGeoAge.otf](https://github.com/usgs/gems-resources/raw/main/FGDCGeoAge.otf) — OpenType version of special geologic age characters.
