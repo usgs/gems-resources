@@ -4,6 +4,8 @@
 
 Most of the files in this repository were formally distributed within the 'Resources' folder of the GeMS Tools ArcGIS geoprocessing toolbox, which is available for [ArcMap](https://github.com/usgs/gems-tools-arcmap) and [ArcGIS Pro](https://github.com/usgs/gems-tools-pro). To avoid the redundant downloading of files in the case where both versions of the toolbox were required and because these files do not need to be versioned in the same way that the tool scripts do, they have been separated from the toolbox.
 
+You can download all files at once using the Download ZIP option in the drop-down menu accessed from the green Code button above or each file individually using the links below.
+
 ## Submission
 * [GeMS Checklist.pdf](https://github.com/usgs/gems-resources/raw/main/GeMS%20checklist.pdf) — PDF form to help with the collection of items before submitting a GeMS database to the National Geologic Map Database ([NGMDB](https://ngmdb.usgs.gov/ngmdb/ngmdb_home.html)) or [STATEMAP](https://www.usgs.gov/core-science-systems/national-cooperative-geologic-mapping-program/science/statemap?qt-science_center_objects=0#qt-science_center_objects)
 
