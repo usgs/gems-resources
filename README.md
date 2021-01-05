@@ -2,7 +2,7 @@
 ## Files and links to help understand, create, and manage [GeMS](https://ngmdb.usgs.gov/Info/standards/GeMS/) databases
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/gems-schema/community)
 
-The files in this repository were formally distributed within the 'Resources' folder of the GeMS Tools ArcGIS geoprocessing toolbox, which is available for [ArcMap](https://github.com/usgs/gems-tools-arcmap) and [ArcGIS Pro](https://github.com/usgs/gems-tools-pro). To avoid the redundant downloading of files in the case where both versions of the toolbox were required and because these files do not need to be versioned in the same way that the tool scripts do, they have been separated from the toolbox.
+Most of the files in this repository were formally distributed within the 'Resources' folder of the GeMS Tools ArcGIS geoprocessing toolbox, which is available for [ArcMap](https://github.com/usgs/gems-tools-arcmap) and [ArcGIS Pro](https://github.com/usgs/gems-tools-pro). To avoid the redundant downloading of files in the case where both versions of the toolbox were required and because these files do not need to be versioned in the same way that the tool scripts do, they have been separated from the toolbox.
 
 ## Documentation
 * [tm11b10.pdf](https://github.com/usgs/gems-resources/raw/main/tm11b10.pdf) — Current version of the GeMS standard
