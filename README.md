@@ -5,7 +5,7 @@
 The files in this repository were formally distributed within the 'Resources' folder of the GeMS Tools ArcGIS geoprocessing toolbox, which is available for [ArcMap](https://github.com/usgs/gems-tools-arcmap) and [ArcGIS Pro](https://github.com/usgs/gems-tools-pro). To avoid the redundant downloading of files in the case where both versions of the toolbox were required and because these files do not need to be versioned in the same way that the tool scripts do, they have been separated from the toolbox.
 
 ## Documentation
-* [tm11b10.pdf] — (https://github.com/usgs/gems-resources/raw/main/tm11b10.pdf) (Current version of the GeMS standard)
+* [tm11b10.pdf](https://github.com/usgs/gems-resources/raw/main/tm11b10.pdf) — Current version of the GeMS standard
 * [GeoMaterials.xlsx](https://github.com/usgs/gems-resources/raw/main/GeoMaterials.xlsx) — terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form.
 
 
