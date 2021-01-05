@@ -1,0 +1,17 @@
+# GeMS Resources
+## Files and links to help understand, create, and manage [GeMS](https://ngmdb.usgs.gov/Info/standards/GeMS/) databases
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/gems-schema/community)
+
+The files in this repository were formally distributed within the 'Resources' folder of the GeMS Tools ArcGIS geoprocessing toolbox, which is available for [ArcMap](https://github.com/usgs/gems-tools-arcmap) and [ArcGIS Pro](https://github.com/usgs/gems-tools-pro). To avoid the redundant downloading of files in the case where both versions of the toolbox were required and because these files do not need to be versioned in the same way that the tool scripts do, they have been separated from the toolbox.
+
+## Documentation
+* Current version of the GeMS standard
+* GeoMaterials — terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form.
+
+## Font files
+* FGDCGeoAge.otf — OpenType version of special geologic age characters.
+* FGDCGeoSym — Five TrueType font files of geologic marker symbols used for decorating line symbols and symbolizing points. These are required for the ArcGIS style files below.
+
+*Installation of fonts on older versions of Windows will require admin privileges, but on any Windows 10 system updated since late 2018 (v. 1809), regular users can install fonts in their user profile directory and they will be recognized by the system. Note that to make the fonts available to all users, admin privileges are required.*
+
+## [FGDC](https://pubs.usgs.gov/tm/2006/11A02/) Symbol documentation
