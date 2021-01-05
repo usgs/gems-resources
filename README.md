@@ -11,7 +11,7 @@ Most of the files in this repository were formally distributed within the 'Resou
 * [tm11b10.pdf](https://github.com/usgs/gems-resources/raw/main/tm11b10.pdf) — Current version of the GeMS standard
 * [GeoMaterials.xlsx](https://github.com/usgs/gems-resources/raw/main/GeoMaterials.xlsx) — terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form.
 
-## [FGDC](https://pubs.usgs.gov/tm/2006/11A02/) Symbol documentation
+## Symbology
 * [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) - 
 
 ## Font files
