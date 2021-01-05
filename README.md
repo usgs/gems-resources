@@ -9,6 +9,10 @@ Most of the files in this repository were formally distributed within the 'Resou
 * [GeoMaterials.xlsx](https://github.com/usgs/gems-resources/raw/main/GeoMaterials.xlsx) — terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form.
 
 
+## Submission to [NGMDB](https://ngmdb.usgs.gov/ngmdb/ngmdb_home.html)
+* [GeMS Checklist.pdf](https://github.com/usgs/gems-resources/raw/main/GeMS%20checklist.pdf) — PDF form to help with the collection of items before submitting a GeMS database to the National Geologic Map Database ([NGMDB](https://ngmdb.usgs.gov/ngmdb/ngmdb_home.html)) or [STATEMAP](https://www.usgs.gov/core-science-systems/national-cooperative-geologic-mapping-program/science/statemap?qt-science_center_objects=0#qt-science_center_objects)
+
+
 ## [FGDC](https://pubs.usgs.gov/tm/2006/11A02/) Symbol documentation
 * [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) - 
 
