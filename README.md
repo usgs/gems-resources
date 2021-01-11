@@ -15,6 +15,8 @@ You can download all files at once using the Download ZIP option in the drop-dow
 * [GeoMaterials.xlsx](https://github.com/usgs/gems-resources/raw/main/GeoMaterials.xlsx) — terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form.
 
 ## Symbology
+* [FGDC Digital Cartographic Standard for Geologic Map Symbolization](https://pubs.usgs.gov/tm/2006/11A02/)
+* [
 * [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) — 
 
 ## Font files
