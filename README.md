@@ -7,7 +7,7 @@ Most of the files in this repository were previously distributed within the 'Res
 You can download all files at once using the Download ZIP option in the drop-down menu accessed from the green Code button above or each file individually using the links below.
 
 ## Delivery
-* [GeMS_Transmittal_Letter](https://github.com/usgs/gems-resources/raw/main/GeMS_Transmittal_Letter.pdf) - Suggestions for the content of a transmittal letter to accompany a GeMS deliverable package.
+* [GeMS_Transmittal_Letter](https://github.com/usgs/gems-resources/raw/main/GeMS_Transmittal_Letter.pdf) — Suggestions for the content of a transmittal letter to accompany a GeMS deliverable package.
 * [GeMS Checklist.pdf](https://github.com/usgs/gems-resources/raw/main/GeMS%20checklist.pdf) — Form to help with the collection of items before delivery of a GeMS database to, for example, the National Geologic Map Database ([NGMDB](https://ngmdb.usgs.gov/ngmdb/ngmdb_home.html)) or [STATEMAP](https://www.usgs.gov/core-science-systems/national-cooperative-geologic-mapping-program/science/statemap?qt-science_center_objects=0#qt-science_center_objects)
 
 ## Documentation
@@ -15,7 +15,7 @@ You can download all files at once using the Download ZIP option in the drop-dow
 * [GeoMaterials.xlsx](https://github.com/usgs/gems-resources/raw/main/GeoMaterials.xlsx) — terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form.
 
 ## Symbology
-* [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) - 
+* [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) — 
 
 ## Font files
 * [FGDCGeoAge.otf](https://github.com/usgs/gems-resources/raw/main/FGDCGeoAge.otf) — OpenType version of special geologic age characters.
@@ -24,6 +24,7 @@ You can download all files at once using the Download ZIP option in the drop-dow
 *Installation of fonts on older versions of Windows will require admin privileges, but on any Windows 10 system updated since late 2018 (v. 1809), regular users can install fonts in their user profile directory and they will be recognized by the system. Note that to make the fonts available to all users, admin privileges are required.*
 
 ## Readmes
-* [GeologicNamesCheck_tool_README](https://github.com/usgs/gems-resources/raw/main/GeologicNamesCheck_tool_README.pdf) &mdash; 
+* [GeologicNamesCheck_tool_README](https://github.com/usgs/gems-resources/raw/main/GeologicNamesCheck_tool_README.pdf) — Detailed instructions on the use of the Geologic Names Check tool in the GeMS Toolbox
+* [GeologicNamesCheck_report_README](https://github.com/usgs/gems-resources/raw/main/GeologicNamesCheck_report_README.pdf) — Detailed instructions for how to interpret and fill out the report the Geologic Names Check tool creates after analyzing a Description of Map Units table
 
 
