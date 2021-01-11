@@ -16,7 +16,8 @@ You can download all files at once using the Download ZIP option in the drop-dow
 
 ## Symbology
 * [FGDC Digital Cartographic Standard for Geologic Map Symbolization](https://pubs.usgs.gov/tm/2006/11A02/)
-* [
+* [FGDCGeoAge.otf](https://github.com/usgs/gems-resources/raw/main/FGDCGeoAge.otf) — OpenType font of special geologic age characters
+* [FGDCGeoSym_fonts.zip](https://github.com/usgs/gems-resources/raw/main/FGDCGeoSym_fonts.zip) — Five TrueType font files of geologic marker symbols used for decorating line symbols and symbolizing points. These are required for the style files below
 * [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) — 
 
 ## Font files
