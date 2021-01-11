@@ -7,7 +7,7 @@ Most of the files in this repository were previously distributed within the 'Res
 You can download all files at once using the Download ZIP option in the drop-down menu accessed from the green Code button above or each file individually using the links below.
 
 ## Delivery
-* [GeMS_Transmittal_Letter](https://github.com/usgs/gems-resources/raw/main/GeMS_Transmittal_Letter.pdf) - Suggestions for the content of a transimittal letter that might accompany a GeMS deliverable package.
+* [GeMS_Transmittal_Letter](https://github.com/usgs/gems-resources/raw/main/GeMS_Transmittal_Letter.pdf) - Suggestions for the content of a transmittal letter to accompany a GeMS deliverable package.
 * [GeMS Checklist.pdf](https://github.com/usgs/gems-resources/raw/main/GeMS%20checklist.pdf) — Form to help with the collection of items before delivery of a GeMS database to, for example, the National Geologic Map Database ([NGMDB](https://ngmdb.usgs.gov/ngmdb/ngmdb_home.html)) or [STATEMAP](https://www.usgs.gov/core-science-systems/national-cooperative-geologic-mapping-program/science/statemap?qt-science_center_objects=0#qt-science_center_objects)
 
 ## Documentation
