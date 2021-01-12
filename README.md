@@ -21,7 +21,7 @@ You can download all files at once using the Download ZIP option in the drop-dow
 * [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) — 
 
 ## Font files
-* [FGDCGeoAge.otf](https://github.com/usgs/gems-resources/raw/main/FGDCGeoAge.otf) — OpenType version of special geologic age characters
+* [FGDCGeoAge.otf](https://github.com/usgs/gems-resources/raw/main/FGDCGeoAge.otf) — OpenType font file of special geologic age characters
 * [FGDCGeoSym.zip](https://github.com/usgs/gems-resources/raw/main/FGDCGeoSym.zip) — Five TrueType font files of geologic marker symbols used for decorating line symbols and symbolizing points. These are required for the ArcGIS style files below.
 
 *Installation of fonts on older versions of Windows will require admin privileges, but on any Windows 10 system updated since late 2018 (v. 1809), regular users can install fonts in their user profile directory and they will be recognized by the system. Note that to make the fonts available to all users, admin privileges are required.*
