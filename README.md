@@ -18,13 +18,10 @@ You can download all files at once using the Download ZIP option in the drop-dow
 * [FGDC Digital Cartographic Standard for Geologic Map Symbolization](https://pubs.usgs.gov/tm/2006/11A02/)
 * [FGDCGeoAge.otf](https://github.com/usgs/gems-resources/raw/main/FGDCGeoAge.otf) — OpenType font of special geologic age characters
 * [FGDCGeoSym_fonts.zip](https://github.com/usgs/gems-resources/raw/main/FGDCGeoSym_fonts.zip) — Five TrueType font files of geologic marker symbols used for decorating line symbols and symbolizing points. These are required for the style files below
+*Installation of fonts on older versions of Windows will require admin privileges, but on any Windows 10 system updated since late 2018 (v. 1809), regular users can install fonts in their user profile directory and they will be recognized by the system. Note that to make the fonts available to all users, admin privileges are required.*
+
 * [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) — 
 
-## Font files
-* [FGDCGeoAge.otf](https://github.com/usgs/gems-resources/raw/main/FGDCGeoAge.otf) — OpenType font file of special geologic age characters
-* [FGDCGeoSym.zip](https://github.com/usgs/gems-resources/raw/main/FGDCGeoSym.zip) — Five TrueType font files of geologic marker symbols used for decorating line symbols and symbolizing points. These are required for the ArcGIS style files below.
-
-*Installation of fonts on older versions of Windows will require admin privileges, but on any Windows 10 system updated since late 2018 (v. 1809), regular users can install fonts in their user profile directory and they will be recognized by the system. Note that to make the fonts available to all users, admin privileges are required.*
 
 ## Readmes
 * [GeologicNamesCheck_tool_README.pdf](https://github.com/usgs/gems-resources/raw/main/GeologicNamesCheck_tool_README.pdf) — Instructions on the use of the Geologic Names Check tool in the GeMS Toolbox
