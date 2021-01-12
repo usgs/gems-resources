@@ -27,7 +27,7 @@ You can download all files at once using the Download ZIP option in the drop-dow
 *Installation of fonts on older versions of Windows will require admin privileges, but on any Windows 10 system updated since late 2018 (v. 1809), regular users can install fonts in their user profile directory and they will be recognized by the system. Note that to make the fonts available to all users, admin privileges are required.*
 
 ## Readmes
-* [GeologicNamesCheck_tool_README](https://github.com/usgs/gems-resources/raw/main/GeologicNamesCheck_tool_README.pdf) — Instructions on the use of the Geologic Names Check tool in the GeMS Toolbox
-* [GeologicNamesCheck_report_README](https://github.com/usgs/gems-resources/raw/main/GeologicNamesCheck_report_README.pdf) — Instructions for how to interpret and fill out the report the Geologic Names Check tool creates after analyzing a Description of Map Units table
-* [ValidateDatabaseREADME](https://github.com/usgs/gems-resources/raw/main/ValidateDatabaseREADME.docx) — Instructions for the use of the Validate Database tool and how to interpret the HTML files it creates
+* [GeologicNamesCheck_tool_README.pdf](https://github.com/usgs/gems-resources/raw/main/GeologicNamesCheck_tool_README.pdf) — Instructions on the use of the Geologic Names Check tool in the GeMS Toolbox
+* [GeologicNamesCheck_report_README.pdf](https://github.com/usgs/gems-resources/raw/main/GeologicNamesCheck_report_README.pdf) — Instructions for how to interpret and fill out the report the Geologic Names Check tool creates after analyzing a Description of Map Units table
+* [ValidateDatabaseREADME.docx](https://github.com/usgs/gems-resources/raw/main/ValidateDatabaseREADME.docx) — Instructions for the use of the Validate Database tool and how to interpret the HTML files it creates
 
