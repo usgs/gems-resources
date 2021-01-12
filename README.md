@@ -21,8 +21,8 @@ You can download all files at once using the Download ZIP option in the drop-dow
 
 *Installation of fonts on older versions of Windows will require admin privileges, but on any Windows 10 system updated since late 2018 (v. 1809), regular users can install fonts in their user profile directory and they will be recognized by the system. Note that to make the fonts available to all users, admin privileges are required.*
 
-* [GSC_FGDC_GeologicMapSymbols_ArcMap.zip](https://github.com/usgs/gems-resources/raw/main/GSC_FGDC_GeologicMapSymbols_ArcMap.zip) — ArcMap style file containing fill, point, line, and text symbols for symbolizing geologic maps according to the FGDC Cartographic Standard (above)
-* [
+* [GSC_FGDC_GeologicMapSymbols_ArcMap.zip](https://github.com/usgs/gems-resources/raw/main/GSC_FGDC_GeologicMapSymbols_ArcMap.zip) — ArcMap style file containing fill, point, line, and text symbols for symbolizing geologic maps according to the FGDC Cartographic Standard (above), symbol dump document, and readme
+* [GSC_FGDC_GeologicMapSymbols_ArcGISPro.zip](https://github.com/usgs/gems-resources/raw/main/GSC_FGDC_GeologicMapSymbols_ArcGISPro.zip) — ArcGIS Pro stylex file containing fill, point, line, and text symbols for symbolizing geologic maps according to the FGDC Cartographic Standard (above), symbol dump document, and readme
 * [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) — 
 
 
