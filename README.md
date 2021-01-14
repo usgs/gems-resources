@@ -23,8 +23,6 @@ You can download all files at once using the Download ZIP option in the drop-dow
 
 * [GSC_FGDC_GeologicMapSymbols_ArcMap.zip](https://github.com/usgs/gems-resources/raw/main/GSC_FGDC_GeologicMapSymbols_ArcMap.zip) — ArcMap style file containing fill, point, line, and text symbols for symbolizing geologic maps according to the FGDC Cartographic Standard (above); symbol dump document; and readme
 * [GSC_FGDC_GeologicMapSymbols_ArcGISPro.zip](https://github.com/usgs/gems-resources/raw/main/GSC_FGDC_GeologicMapSymbols_ArcGISPro.zip) — ArcGIS Pro stylex file containing fill, point, line, and text symbols for symbolizing geologic maps according to the FGDC Cartographic Standard (above); symbol dump document; and readme
-* [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) — 
-
 
 ## Readmes
 * [GeologicNamesCheck_tool_README.pdf](https://github.com/usgs/gems-resources/raw/main/GeologicNamesCheck_tool_README.pdf) — Instructions on the use of the Geologic Names Check tool in the GeMS Toolbox
