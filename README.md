@@ -27,4 +27,5 @@ You can download all files at once using the Download ZIP option in the drop-dow
 ## Readmes
 * [GeologicNamesCheck_tool_README.pdf](https://github.com/usgs/gems-resources/raw/main/gems-resources/GeologicNamesCheck_tool_README.pdf) — Instructions on the use of the Geologic Names Check tool in the GeMS Toolbox
 * [GeologicNamesCheck_report_README.pdf](https://github.com/usgs/gems-resources/raw/main/gems-resources/GeologicNamesCheck_report_README.pdf) — Instructions for how to interpret and fill out the report the Geologic Names Check tool creates after analyzing a Description of Map Units table
+* [Geolex_DMU_namescheck.xlsx](https://github.com/usgs/gems-resources/raw/main/gems-resources/Geolex_DMU_namescheck.xlsx) — Example output from Geologic Names Check tool; for reference when reading the readme above
 * [ValidateDatabaseREADME.docx](https://github.com/usgs/gems-resources/raw/main/gems-resources/ValidateDatabaseREADME.docx) — Instructions for the use of the Validate Database tool and how to interpret the HTML files it creates
