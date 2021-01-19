@@ -2,7 +2,7 @@
 ## Files and links to help understand, create, and manage [GeMS](https://ngmdb.usgs.gov/Info/standards/GeMS/) databases
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/gems-schema/community)
 
-Most of the files in this repository were previously distributed within the 'Resources' folder of the GeMS Tools ArcGIS geoprocessing toolbox, which is available for [ArcMap](https://github.com/usgs/gems-tools-arcmap) and [ArcGIS Pro](https://github.com/usgs/gems-tools-pro). To avoid the redundant downloading of files in the case where both versions of the toolbox were required and because these files do not need to be versioned in the same way that the tool scripts do, they have been separated from the toolbox.
+Most of the files in this repository were previously distributed within the 'Resources' folder of the GeMS Tools ArcGIS geoprocessing toolbox, which is available for [ArcMap](https://github.com/usgs/gems-tools-arcmap) and [ArcGIS Pro](https://github.com/usgs/gems-tools-pro). To avoid the redundant downloading of files in the case where both versions of the toolbox are required and because these files do not need to be versioned in the same way that the tool scripts do, they have been separated from the toolbox.
 
 You can download all files at once using the Download ZIP option in the drop-down menu accessed from the green Code button above or each file individually using the links below.
 
@@ -12,7 +12,7 @@ You can download all files at once using the Download ZIP option in the drop-dow
 
 ## Documentation
 * [tm11b10.pdf](https://github.com/usgs/gems-resources/raw/main/tm11b10.pdf) — Current version of the GeMS standard
-* [GeoMaterials.xlsx](https://github.com/usgs/gems-resources/raw/main/GeoMaterials.xlsx) — terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form
+* [GeoMaterials.xlsx](https://github.com/usgs/gems-resources/raw/main/GeoMaterials.xlsx) — Terms and definitions from Appendix 1 of the GeMS documentation, in spreadsheet form
 
 ## Symbology
 * [FGDC Digital Cartographic Standard for Geologic Map Symbolization](https://pubs.usgs.gov/tm/2006/11A02/)
@@ -23,8 +23,6 @@ You can download all files at once using the Download ZIP option in the drop-dow
 
 * [GSC_FGDC_GeologicMapSymbols_ArcMap.zip](https://github.com/usgs/gems-resources/raw/main/GSC_FGDC_GeologicMapSymbols_ArcMap.zip) — ArcMap style file containing fill, point, line, and text symbols for symbolizing geologic maps according to the FGDC Cartographic Standard (above); symbol dump document; and readme
 * [GSC_FGDC_GeologicMapSymbols_ArcGISPro.zip](https://github.com/usgs/gems-resources/raw/main/GSC_FGDC_GeologicMapSymbols_ArcGISPro.zip) — ArcGIS Pro stylex file containing fill, point, line, and text symbols for symbolizing geologic maps according to the FGDC Cartographic Standard (above); symbol dump document; and readme
-* [ColorChart_Val100.pdf](https://github.com/usgs/gems-resources/raw/main/ColorChart_Val100.pdf) — 
-
 
 ## Readmes
 * [GeologicNamesCheck_tool_README.pdf](https://github.com/usgs/gems-resources/raw/main/GeologicNamesCheck_tool_README.pdf) — Instructions on the use of the Geologic Names Check tool in the GeMS Toolbox
