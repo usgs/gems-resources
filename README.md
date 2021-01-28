@@ -32,3 +32,9 @@ You can download all files at once using the Download ZIP option in the drop-dow
 * [GeologicNamesCheck_report_README.pdf](https://github.com/usgs/gems-resources/raw/main/gems-resources/GeologicNamesCheck_report_README.pdf) — Instructions for how to interpret and fill out the report the Geologic Names Check tool creates after analyzing a Description of Map Units table
 * [Geolex_DMU_namescheck.xlsx](https://github.com/usgs/gems-resources/raw/main/gems-resources/Geolex_DMU_namescheck.xlsx) — Example output from Geologic Names Check tool; for reference when reading the readme above
 * [ValidateDatabaseREADME.docx](https://github.com/usgs/gems-resources/raw/main/gems-resources/ValidateDatabaseREADME.docx) — Instructions for the use of the Validate Database tool and how to interpret the HTML files it creates
+
+## Miscellaneous
+* [Monthly Collaborative Database Effort for Geology (CDEFG) meetings](htts://dggs.alaska.gov/gemswiki) on the development of a multi-map, multi-user database based on GeMS at the Alaska Division of Geological and Geophysical Surveys. Many general GeMS topics discussed in addition to building an enterprise database
+* [MapMerger](https://github.com/rcrow/MapMerger) tool for merging GeMS map datases. Ryan Crow, USGS
+* [Workflows, tools, and documentation for working with GeMS databases](https://github.com/wgnhs/gems) by the Wisconsin Geological & Natural History Survey
+
