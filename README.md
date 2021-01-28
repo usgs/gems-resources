@@ -34,6 +34,11 @@ You can download all files at once using the Download ZIP option in the drop-dow
 * [ValidateDatabaseREADME.docx](https://github.com/usgs/gems-resources/raw/main/gems-resources/ValidateDatabaseREADME.docx) — Instructions for the use of the Validate Database tool and how to interpret the HTML files it creates
 
 ## Miscellaneous
-* [CDEFG](htts://dggs.alaska.gov/gemswiki) on the development of a multi-map, multi-user database based on GeMS at the Alaska Division of Geological and Geophysical Surveys. Many general GeMS topics discussed in addition to building an enterprise database
+* [Monthly Collaborative Database Effort for Geology (CDEFG) meetings](htts://dggs.alaska.gov/gemswiki) on the development of a multi-map, multi-user database based on GeMS at the Alaska Division of Geological and Geophysical Surveys. Many general GeMS topics discussed in addition to building an enterprise database
 * [MapMerger](https://github.com/rcrow/MapMerger) tool for merging GeMS map datases. Ryan Crow, USGS
 * [Workflows, tools, and documentation for working with GeMS databases](https://github.com/wgnhs/gems) by the Wisconsin Geological & Natural History Survey
+
+## Disclaimer
+This software is preliminary or provisional and is subject to revision. It is being provided to meet the need for timely best science. The software has not received final approval by the U.S. Geological Survey (USGS). No warranty, expressed or implied, is made by the USGS or the U.S. Government as to the functionality of the software and related material nor shall the fact of release constitute any such warranty. The software is provided on the condition that neither the USGS nor the U.S. Government shall be held liable for any damages resulting from the authorized or unauthorized use of the software.
+
+Any use of trade, firm, or product names is for descriptive purposes only and does not imply endorsement by the U.S. Government.
