@@ -3,7 +3,7 @@
 <img width="250" align="right" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/USGS_logo_green.svg/500px-USGS_logo_green.svg.png"/>
 
 # GeMS Resources
-## Files and links to help understand, create, and manage [GeMS](https://ngmdb.usgs.gov/Info/standards/GeMS/) databases
+Files and links to help understand, create, and manage [GeMS](https://ngmdb.usgs.gov/Info/standards/GeMS/) databases
 
 Most of the files in this repository were previously distributed within the 'Resources' folder of the GeMS Tools ArcGIS geoprocessing toolbox, which is available for [ArcMap](https://github.com/usgs/gems-tools-arcmap) and [ArcGIS Pro](https://github.com/usgs/gems-tools-pro). To avoid the redundant downloading of files in the case where both versions of the toolbox are required and because these files do not need to be versioned in the same way that the tool scripts do, they have been separated from the toolbox.
 
