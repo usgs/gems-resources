@@ -1,4 +1,4 @@
- [![pro](https://img.shields.io/badge/gems--tools-pro-orange)](https://github.com/usgs/gems-tools-pro) [![pro](https://img.shields.io/badge/gems--tools-arcmap-orange)](https://github.com/usgs/gems-tools-arcmap) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/gems-schema/community) [![GeMS on USGS](https://img.shields.io/badge/gems-USGS-brightgreen)](https://ngmdb.usgs.gov/Info/standards/GeMS/) 
+ [![pro](https://img.shields.io/badge/gems--tools-pro-orange)](https://github.com/usgs/gems-tools-pro) [![pro](https://img.shields.io/badge/gems--tools-arcmap-orange)](https://github.com/usgs/gems-tools-arcmap) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/gems-schema/community) [![gems on USGS](https://img.shields.io/badge/gems-%40%20USGS-brightgreen)](https://ngmdb.usgs.gov/Info/standards/GeMS/) 
 
 <img width="250" align="right" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/USGS_logo_green.svg/500px-USGS_logo_green.svg.png"/>
 
