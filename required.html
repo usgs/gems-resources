@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="USGS (U.S. Geological Survey) GeMS (Geologic Map Schema)">
+
+    <title>GeMS — Required Elements</title>
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/gems.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg text-white fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">GeMS — Geologic Map Schema</a>
+            <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+					<!--Data Dropdown-->
+					<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownDataOne" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Report Breakdown</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownDataOne">
+						<a class="dropdown-item" href="background.html">Background</a>
+						<a class="dropdown-item" href="content.html">Content of a Geologic Map</a>
+						<a class="dropdown-item" href="database-design.html">Database Design</a>
+						<a class="dropdown-item" href="required.html">Required Elements</a>
+						<a class="dropdown-item" href="as-needed.html">As-Needed Elements</a>
+						<a class="dropdown-item" href="symbolization.html">Symbolization</a>
+						<a class="dropdown-item" href="references.html">References</a>
+						<a class="dropdown-item" href="appendices.html">Appendices</a>
+						</div>
+                    </li>					
+					<!--Data Dropdown-->			
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content --> 
+	<header class="business-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 my-sm-4 pt-3 pt-sm-0 background-text">
+                    <h1 class="page-header" id="top">Required Elements</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+	<div class="container">
+		<div class="nav">
+			<div class="navTextCenter">
+				<span><a href="#geologicmap">GeologicMap (Feature Dataset)</a> | <a href="#descriptionOfMapUnits">DescriptionOfMapUnits (Nonspatial Table)</a> | <a href="#dataSources">DataSources (Nonspatial Table)</a> | <a href="#geoMaterialDict">GeoMaterialDict (Nonspatial Table)</a> | <a href="#glossary">Glossary (Nonspatial Table)</a></span>
+			</div>
+		</div>	
+		<div class="white-bg">
+			<h2 id="geologicmap">GeologicMap (Feature Dataset)</h2>
+				<p>The GeologicMap feature dataset is nearly equivalent to the map graphic in that it contains all the geologic content within the neatline, with the exception of the base map. All elements in a feature dataset share a single geospatial reference framework.</p>	
+				<p>Listed below are the required elements in a GeologicMap feature dataset, along with tables that describe the content of each element and (if applicable) a list of topology rules.</p>
+					<h3 class="h4" id="mapunitpoly">MapUnitPolys (Polygon Feature Class)</h3>
+						<p>The MapUnitPolys polygon feature class contains all the units within the mapped area: geologic map units, areas of open water, permanent snowfields, or glaciers, as well as any unmapped areas. Table 12 describes the fields (and their values) in MapUnitPolys.</p>
+							<p class="tableCap" id="table-12"><strong>Table 12.</strong> Fields in MapUnitPolys (a polygon feature class in the GeologicMap feature dataset).<br>
+							<span class="tableSmall">[Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the IdentityConfidence field) must be defined in Glossary table. See also, tables <a href="database-design.html#table-11">11</a>, <a href="required.html#table-14">14</a>]</span></p>
+							<table class="table-bordered other-table">
+								<tr>
+									<th width="10%">Field name</th>
+									<th width="30%">Description</th>
+									<th width="60%">Notes</th>
+								</tr>
+								<tr>
+									<td>MapUnit</td>
+									<td>Short, easily understood ASCII-character<sup><span class="footnote" data-toggle="modal" data-target="#one">1</span></sup> identifier for the map unit represented by this polygon. Foreign key to DescriptionOfMapUnits table (see <a href="required.html#table-14">table 14</a>)</td>
+									<td>Examples of values are “Qal”, “Tg”, “Kit”, “Trdu”, “water” (see table 11). Use of special characters is discouraged. Null values not permitted</td>
+								</tr>
+								<tr>
+									<td><span class="magentaBackground">IdentityConfidence</span></td>
+									<td>Indicates how confidently this polygon has been identified as a particular map unit</td>
+									<td>Typical values are “certain”, “questionable”, “unspecified”. Values must be defined in Glossary table. Null values not permitted; suggest setting default value = “certain”</td>
+								</tr>
+								<tr>
+									<td>Label</td>
+									<td>Describes text label for this map-unit polygon</td>
+									<td>May or may not be same as MapUnit value. Determined from value of Label in DescriptionOfMapUnits table and IdentityConfidence (that is, if IdentityConfidence = “questionable”, then “?” is appended to Label value in DescriptionOfMapUnits table). Allows for special fonts to show geologic age symbols (see <a href="database-design.html#table-11">table 11</a>) and other non-ASCII characters. Null values permitted</td>
+								</tr>
+								<tr>
+									<td>Symbol</td>
+									<td>References an area-fill symbol</td>
+									<td>Area-fill symbols (map-unit color, pattern, or color+pattern) must be included in accompanying .style file. Null values (which would indicate polygon is not filled on map) permitted; if Esri cartographic representations are used to symbolize map units, value may be null. Value is typically assigned by joining MapUnitPolys to DescriptionOfMapUnits table via MapUnit and calculating MapUnitPolys.Symbol = DescriptionOfMapUnits.Symbol</td>
+								</tr>
+								<tr>
+									<td>DataSourceID</td>
+									<td>Identifies source of each data element. Foreign key to DataSources table</td>
+									<td>Null values not permitted</td>
+								</tr>
+								<tr>
+									<td>Notes</td>
+									<td>Optional field</td>
+									<td>Free text for additional information specific to this polygon. Null values permitted</td>
+								</tr>									
+								<tr class="border-bottom">
+									<td>MapUnitPolys_ID</td>
+									<td>Primary key</td>
+									<td>Examples of values are “MUP1”, “MUP2”. Values must be unique in database. Null values not permitted</td>
+								</tr>							
+							</table>
+						<p>Some units use specialized symbols in their map-unit labels; however, the special characters needed to render such symbols on a map are less intelligible to readers of the MapUnit field (see examples in <a href="database-design.html#table-11">table 11</a>). Thus, the MapUnit value is not used to label the unit on the map; instead, the Label field is. The Label field accommodates the use of special characters (for example, to display geologic age symbols using the FGDCGeoAge font; see <a href="database-design.html#table-11">table 11</a>). The MapUnit field generally contains an easily understood ASCII-character equivalent of the specialized symbol. When no specialized symbol is needed, Label and MapUnit typically have the same value (see <a href="database-design.html#table-11">table 11</a>). For more information on geologic age symbols, see Section 32 in the FGDC cartographic standard (<a href="https://pubs.usgs.gov/tm/2006/11A02/" target="_blank">FGDC, 2006</a>).</p>
+						<p>Note that areas of open water (for example, lakes, wide rivers), glaciers, snowfields, and unmapped areas must be included in MapUnitPolys, and they must have non-null MapUnit values (examples would be MapUnit = “water”, “glacier”, “unmapped”); however, such areas commonly are not labeled with their MapUnit values (therefore, Label = &lt;null&gt;).</p>
+							<h4 class="h5">Topology Rules</h4>
+								<p>The following topology rules apply to the MapUnitPolys polygon feature class:</p>
+								<ul>
+									<li>Polygons must not overlap.</li>
+									<li>No gaps can be present between polygons.</li>
+									<li>Polygon boundaries must be overlain by (topologically, not simply cartographically) lines in the ContactsAndFaults feature class.</li>
+								</ul>
+					<h3 class="h4" id="contactsandfaults">ContactsAndFaults (Line Feature Class)</h3>
+						<p>The ContactsAndFaults line feature class contains the types of lines that bound map-unit polygons; common types are contacts, faults, waterlines, and map boundaries. Table 13 describes the fields (and their values) in ContactsAndFaults.</p>
+							<p class="tableCap" id="table-13"><strong>Table 13.</strong> Fields in ContactsAndFaults (a line feature class in the GeologicMap feature dataset).<br>
+							<span class="tableSmall">[Abbreviations: N, no; Y, yes. Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the Type, ExistenceConfidence, and IdentityConfidence fields) must be defined in Glossary table. See also, <a href="database-design.html#table-8">table 8</a>]</span></p>
+							<table class="table-bordered other-table">
+								<tr>
+									<th width="10%">Field name</th>
+									<th width="30%">Description</th>
+									<th width="60%">Notes</th>
+								</tr>
+								<tr>
+									<td><span class="magentaBackground">Type</span></td>
+									<td>Specifies type of geologic feature represented by this database row</td>
+									<td>Examples of values are “contact”, “fault”, “thrust fault”, “waterline”, “glacier boundary”, “map boundary”. Values must be defined in Glossary table. Null values not permitted</td>
+								</tr>
+								<tr>
+									<td>IsConcealed</td>
+									<td>Indicates whether this contact or fault is concealed by an overlying map unit</td>
+									<td>Values = “N” or “Y”. Null values not permitted</td>
+								</tr>
+								<tr>
+									<td>LocationConfidenceMeters</td>
+									<td>Half-width (in meters) of positional-uncertainty envelope around this line feature</td>
+									<td>Data type = float. Null values not permitted; recommend setting value = −9 if value is not known (see discussion above in “<a href="content.html#metadata">Feature-Level Metadata</a>” and example values in <a href="content.html#table-1">table 1</a>)</td>
+								</tr>
+								<tr>
+									<td><span class="magentaBackground">ExistenceConfidence</span></td>
+									<td>Indicates how confidently existence of this line feature has been determined</td>
+									<td>Typical values are “certain”, “questionable”, “unspecified”. Values must be defined in Glossary table. Null values not permitted; suggest setting default value = “certain”</td>
+								</tr>
+								<tr>
+									<td><span class="magentaBackground">IdentityConfidence</span></td>
+									<td>Indicates how confidently this line feature has been identified as a particular type</td>
+									<td>Typical values are “certain”, “questionable”, “unspecified”. Values must be defined in Glossary table. Null values not permitted; suggest setting default value = “certain”</td>
+								</tr>	
+								<tr>
+									<td>Label</td>
+									<td>Describes text label for this line feature</td>
+									<td>Can be used to store fault name or other easily understood name for line feature. Allows for special fonts to show geologic age symbols (see <a href="database-design.html#table-11">table 11</a>). Null values are typical</td>
+								</tr>
+								<tr>
+									<td>Symbol</td>
+									<td>References a line symbol</td>
+									<td>Line symbols must be included in accompanying .style file. Null values (which would indicate lines are not shown on map) permitted; if Esri cartographic representations are used to symbolize lines, value may be null. Determined from values of Type, IsConcealed, LocationConfidenceMeters, ExistenceConfidence, and IdentityConfidence fields, as well as map display scale</td>
+								</tr>
+								<tr>
+									<td>DataSourceID</td>
+									<td>Identifies source of each data element. Foreign key to DataSources table</td>
+									<td>Null values not permitted</td>
+								</tr>
+								<tr>
+									<td>Notes</td>
+									<td>Optional field</td>
+									<td>Free text for additional information specific to this line feature. Null values permitted</td>
+								</tr>									
+								<tr class="border-bottom">
+									<td>ContactsAndFaults_ID</td>
+									<td>Primary key</td>
+									<td>Examples of values are “CAF1”, “CAF2”. Values must be unique in database. Null values not permitted</td>
+								</tr>							
+							</table>							
+						<p>Map boundaries, open-water boundaries, and snowfield and glacier boundaries delineate the edge of certain map-unit polygons. In this sense, they are contacts, and, therefore, they are included in this feature class.</p>
+						<p>Scratch boundaries (also known as wash boundaries) are boundaries for which no symbol is drawn. We recommend setting the value of Symbol = “blank” for scratch boundaries.</p>
+						<p>Examples of values suggested for the Type field include the following:</p>
+							<ul style="list-style-type:none;">
+								<li>“contact”</li>
+								<li>“contact, internal”</li>
+								<li>“contact, gradational”</li>
+								<li>“contact, unconformable”</li>
+								<li>“fault”</li>
+								<li>“fault, normal”</li>
+								<li>“fault, reverse”</li>
+								<li>“fault, thrust”</li>
+								<li>“scratch boundary”</li>
+								<li>“glacier boundary”</li>
+								<li>“waterline”</li>
+								<li>“shoreline”</li>
+								<li>“map boundary”, “map neatline”, or “neatline”</li>
+							</ul>
+						<p>The above list is derived from Sections 1, 2, 30, and 31 in the appendix of the FGDC cartographic standard (<a href="https://pubs.usgs.gov/tm/2006/11A02/" target="_blank">FGDC, 2006</a>). Other values of Type certainly are acceptable (for example, see the CGI FaultType and ContactType vocabularies, available at <A href="http://resource.geosciml.org/def/voc/" target="_blank">http://resource.geosciml.org/def/voc/</a>).</p>
+						<p>It has been a common practice to encode (via symbolization on a paper map, or a single attribute field in a database) contacts as, for example, “contact, certain”, “contact, inferred”, “contact, approximately located”, “contact, concealed”, “contact, queried”, or some permutation of these values. In the GeMS schema, these line features all would have the same value of Type (“contact”) but different values of IsConcealed, LocationConfidenceMeters, ExistenceConfidence, and (or) IdentityConfidence. Faults and some other line features that have been encoded in a similar fashion are treated the same way in the GeMS schema. Although this is a departure from what may have been a common practice, it allows for map data that is more easily communicated to nonspecialists, is more intelligently combined with other data, and is better used at other scales. See discussion in the “<a href="content.html#metadata">Feature-Level Metadata</a>” section above.</p>
+						<p>Note that not all lines in ContactsAndFaults necessarily bound polygons. In some cases, polygons separated by concealed faults or concealed contacts may have been merged during construction of the database; also, some faults and concealed contacts may dangle (that is, terminate within a polygon) and, thus, may not always separate polygons.</p>
+							<h4 class="h5">Topology Rules</h4>
+								<p>The following topology rules apply to the ContactsAndFaults line feature class:</p>
+									<ul>
+										<li>Lines must not overlap each other.</li>
+										<li>Lines must not overlap themselves.</li>
+										<li>Lines must not intersect themselves.</li>
+										<li>Except for faults and concealed contacts, lines must not have dangles; therefore, dangling lines must have values of either (1) Type = “fault” (or some variant thereof) or (2) Type = “contact” or “fault” and IsConcealed = “Y”.</li>
+									</ul>
+		</div>
+		<div class="white-bg">
+			<h2 id="descriptionOfMapUnits">DescriptionOfMapUnits (Nonspatial Table)</h2>
+				<p>DescriptionOfMapUnits is a nonspatial table that captures the content of the Description of Map Units (DMU) included in a geologic map report. Table 14 describes the fields (and their values) in the DescriptionOfMapUnits table.</p>
+					<p class="tableCap" id="table-14"><strong>Table 14.</strong> Fields in DescriptionOfMapUnits (a nonspatial table).<br>
+					<span class="tableSmall">[Abbreviations: DMU, Description of Map Units; HTML, Hypertext Markup Language; NGMDB, National Geologic Map Database. Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the ParagraphStyle and GeoMaterialConfidence fields) must be defined in Glossary table. See also, tables <a href="database-design.html#table-7">7</a>, <a href="database-design.html#table-11">11</a>, <a href="#table-12">12</a>, <a href="appendix-three.html#table-3-1">3–1</a>]</span></p>
+					<table class="table-bordered other-table">
+						<tr>
+							<th width="10%">Field name</th>
+							<th width="30%">Description</th>
+							<th width="60%">Notes</th>
+						</tr>
+						<tr>
+							<td>MapUnit</td>
+							<td>Short, easily understood ASCII-character<sup><span class="footnote" data-toggle="modal" data-target="#table14one">1</span></sup> identifier for the map unit</td>
+							<td>Examples of values are “Qal”, “Tg”, “Kit”, “Trdu” (see <a href="database-design.html#table-11">table 11</a>). Use of special characters is discouraged. Null values only permitted for headings and for units that do not appear on map or in cross sections</td>
+						</tr>
+						<tr>
+							<td>Name</td>
+							<td>Short name of formal<sup><span class="footnote" data-toggle="modal" data-target="#two">2</span></sup> or informal map unit, as shown in DMU</td>
+							<td>Examples of values are “Chinle Formation”, “Shnabkaib Member”, “basaltic andesite of Middle Sister summit”, “Ada Group”, “sandy siltstone”. Should contain no hierarchy specifications (these are given in ParagraphStyle and HierarchyKey fields). Place headings in this field; place headnotes in Description field. Null values not permitted</td>
+						</tr>
+						<tr>
+							<td>FullName</td>
+							<td>Full name of formal or informal map unit; must include complete identification of any higher rank unit(s) that contain this unit (may or may not be same as Name value)</td>
+							<td>Examples of values are “Shnabkaib Member of the Moenkopi Formation”, “sandy siltstone subunit of the Monterey Formation”. Values correspond to usages reported by Geolex (<a href="http://ngmdb.usgs.gov/Geolex/" target="_blank">http://ngmdb.usgs.gov/Geolex/</a>). Null values only permitted in rows that correspond to headings</td>
+						</tr>
+						<tr>
+							<td>Age</td>
+							<td>Age of map unit, as shown in DMU</td>
+							<td>Examples of values are “late Holocene”, “Pliocene and Miocene”, “Lower Cretaceous”. When age of subunit is not shown in DMU because it is same age as higher rank unit, use age of higher rank unit; do not leave empty. Null values only permitted for rows that correspond to headings</td>
+						</tr>
+						<tr>
+							<td>Description</td>
+							<td>Full description of map unit, as contained in DMU</td>
+							<td>Free text field. Allows for markup-language (for example, HTML) or special characters to show new paragraphs, superscripts, and geologic age symbols. Note that map-unit descriptions can be structured according to one or more accepted traditions (see text for discussion of content, structure, and style of unit descriptions). In rows that correspond to headings, place headnotes in this field (place headings in Name field). Null values permitted</td>
+						</tr>
+						<tr>
+							<td>HierarchyKey</td>
+							<td>Text string that indicates place of map unit or heading within DMU hierarchy</td>
+							<td>Text string has form of “n-n-n”, “nn-nn”, “nn-nn-nn”, “nnn-nnn”, or similar (see discussion in <a href="appendix-three.html">appendix 3</a>); each dash-delimited fragment of string (1) is numeric, (2) has same length as others in string and in <a href="required.html#descriptionOfMapUnits">DescriptionOfMapUnits table</a>, and (3) is left-padded with zeroes if values are greater than 9 (that is, if they exceed one digit). Examples of values are shown in <a href="appendix-three.html">appendix 3</a>, which illustrates HierarchyKey values of several DMUs. Values describe order and rank of DMU elements and facilitate resolving queries such as <em>“find all members of formation x” or “what is the parent unit of map unit y”</em>. Null values not permitted</td>
+						</tr>							
+						<tr>
+							<td><span class="magentaBackground">ParagraphStyle</span></td>
+							<td>Name of user-defined paragraph style that indicates hierarchy of map units and headings within DMU</td>
+							<td>Examples of values are “DMUHeading1”, “DMUHeading2”, “DMUUnit1”, “DMUUnit2”. Values must be defined in Glossary table; definition typically includes formatting specifications (for example, in Glossary table for Term = “DMUUnit1”, value for Definition might be Definition = “Paragraph style for formatted description of first-rank map unit. Times New Roman, Regular, 10 pt, 12 pt leading, left justified, 66 pt left indent, –20 pt 1st line indent, 3 pt space before”). Null values not permitted</td>
+						</tr>
+						<tr>
+							<td>Label</td>
+							<td>Describes text label for map-unit polygons. Field from which map-unit label is generated</td>
+							<td>May or may not be same as MapUnit value. Allows for special fonts to show geologic age symbols and other non-ASCII characters (see <a href="database-design.html#table-11">table 11</a>). Null values only permitted for headings, for units that are not labeled on map or cross sections, and for units that do not appear on map or cross sections (for example, water, glaciers, overlay units, and units that are represented on map only by their subunits)</td>
+						</tr>
+						<tr>
+							<td>Symbol</td>
+							<td>References an area-fill symbol</td>
+							<td>Area-fill symbols (map-unit color&plus;pattern, or color+pattern) must be included in accompanying .style file. Null values (which would indicate polygon is not filled on map) permitted; if Esri cartographic representations are used to symbolize map units, value may be null. Null values also permitted for headings and for units that do not appear on map or cross sections </td>
+						</tr>
+						<tr>
+							<td>AreaFillRGB</td>
+							<td>Specifies RGB<sup><span class="footnote" data-toggle="modal" data-target="#three">3</span></sup> equivalent of area-fill color of map unit as{&lt;red value&gt;,&lt;green value&gt;,&lt;blue value&gt;} tuples<sup><span class="footnote" data-toggle="modal" data-target="#four">4</span></sup></td>
+							<td>Examples of values are “255,255,255”, “124,005,255”. Use of consistent syntax is important to enable computer programs to read field and display intended color: (1) each RGB color value is integer between 0 and 255; (2) values are left-padded with zeroes so that each consists of 3 digits; (3) values are separated by commas with no spaces (for example, nnn,nnn,nnn). Provided as convenience for users who want to re-create area-fill colors for onscreen viewing; especially important to non-ArcGIS users who are unable to use .style file supplied with database. Null values only permitted for uncolored map units and for headings</td>
+						</tr>
+						<tr>
+							<td>AreaFillPatternDescription</td>
+							<td>Easily understood description of pattern fill of map unit (for example, “random small red dashes”) </td>
+							<td>Provided as convenience for users who want to re-create area-fill patterns; especially important to non-ArcGIS users who are unable to use .style file supplied with database. Null values only permitted for unpatterned map units and for headings</td>
+						</tr>
+						<tr>
+							<td>DescriptionSourceID</td>
+							<td>Identifies source of Description. Foreign key to DataSources table</td>
+							<td>Example values include “DAS1” ( = this report), “DAS2” ( = Smith, J.G., 1899) (see tables <a href="database-design.html#table-6">6</a>, <a href="database-design.html#table-7">7</a>). Useful for documenting derivation of map-unit descriptions from another source. Null values not permitted</td>
+						</tr>
+						<tr>
+							<td>GeoMaterial</td>
+							<td>Categorizes map unit in terms of its lithologic and genetic character</td>
+							<td>Use terms from the NGMDB standard term list in <a href="appendix-one.html">appendix 1</a>; see discussion in “Extensions to Traditional Geologic Map Content” section above. Null values only permitted for unmapped units and headings</td>
+						</tr>							
+						<tr>
+							<td><span class="magentaBackground">GeoMaterialConfidence</span></td>
+							<td>Describes appropriateness of GeoMaterial term for describing map unit (see <a href="appendix-one.html">appendix 1</a>)</td>
+							<td>Values must be defined in Glossary table. Null values permitted only for unmapped units and headings</td>
+						</tr>							
+						</tr>									
+						<tr class="border-bottom">
+							<td>DescriptionOfMapUnits_ID</td>
+							<td>Primary key</td>
+							<td>Examples of values are “DMU1”, “DMU2”. Values must be unique in database. Null values not permitted</td>
+						</tr>							
+					</table>					
+				<p>Note that the authoritative source for the content of a DescriptionOfMapUnits table should always be a DMU (not a List of Map Units, or LMU), whether the DMU appears on the map sheet or is included in an accompanying pamphlet. An LMU on a map sheet is only a distillation of the full content of the DMU and is provided as a convenience to help identify units on the map.</p>
+				<p>A DMU is strongly formatted and typically hierarchical, in many cases following the guidelines and conventions specified in USGS’s “Suggestions to Authors of the Reports of the United States Geological Survey, Eighth Edition” (STA8) (USGS, in press; see also, STA7, Hansen, 1991, p. 49–52); see discussion in the “Notes on the Content of the Description Field” section below. The DescriptionOfMapUnits table encodes the DMU as is specified in STA8, without loss of information and—with two exceptions (the two GeoMaterial fields)—without imposing additional structure or content.</p> 
+				<p id="geomaterialFields">We have added the fields GeoMaterial and GeoMaterialConfidence to the DescriptionOfMapUnits table in order to provide abbreviated content that will allow for simple queries and (or) generalized symbolizations of the character of geologic map units across one or many maps. It is important that users populate the GeoMaterial field with terms from the NGMDB standard term list (included in <a href="appendix-one.html">appendix 1</a>); they should then use the GeoMaterialConfidence field to characterize the relative appropriateness of the term chosen for the GeoMaterial field. Note that the abbreviated content in the GeoMaterial field is not a replacement for the full, robust, free-text information in the Description field. Note also that additional, more detailed lithologic information may be included either in a supplementary user-defined table or in the optional StandardLithology table (see discussion in appendix 2, “<a href="appendix-two.html#standardLith">Optional Elements</a>”).</p>
+					<h3 class="h4">Notes on the Content of the Description Field</h3>
+						<p>The content of the Description field in the DescriptionOfMapUnits table is an essential part of this database schema, just as the map-unit descriptions in a DMU are always an essential part of a geologic map report. This schema does not prescribe a particular form or content of such descriptions; however, we support the ideas put forth in STA8 (USGS, in press), which states the following:</p>
+						<p style="padding-left: 36px;">“Description of Map Units”, &ast;&ast;&ast;<sup>[<span class="footnote" data-toggle="modal" data-target="#thirteen">13</span>]</sup>  for each map unit, contains its map-unit label, its name, and its assigned age system, followed by an abbreviated account of the lithologic characteristics of its rocks and (or) deposits &ast;&ast;&ast; described in order of increasing age; thus, surficial units are described before bedrock units. The ranking of units and subunits on a geologic map is indicated in the DMU by successive levels of indentation of the unit descriptions &ast;&ast;&ast;, as the following examples show:</p> 
+						<p style="padding-left: 108px; text-indent: -36px;"><strong>Dakota Group (Cretaceous)</strong>—Alternating sandstone and dark-colored shale beds overlying beds of sandstone, conglomerate, and claystone</p>
+						<p style="padding-left: 108px; text-indent: -36px;"><strong>South Platte Formation (Lower Cretaceous)</strong>—Alternating beds of gray to black shale and brown-weathering sandstone</p>
+						<p style="padding-left: 108px; text-indent: -36px;"><strong>Kassler Sandstone Member</strong>—Brown-weathering, massive, fine-grained sandstone</p>
+						<p style="padding-left: 36px;">Headings are used to organize and identify groups of units. Beneath each heading, each map unit is described in order of increasing age; thus, the upper member of a formation would be described before its middle or lower members. The hierarchy of a DMU heading is indicated by a unique type style; &ast;&ast;&ast; the DMU title (“Description of Map Units”) is [considered a] first-order heading. A typical DMU contains at least two second-order headings (for example, “Surficial Deposits” and “Bedrock”), although most DMUs commonly contain a few third- and fourth-order headings as well (for example, “Volcanic Rocks” and “Pyroclastic Deposits”); some maps may require as many as seven orders of headings.</p>
+						<p>STA8 (USGS, in press) also notes the long tradition of writing the DMU and makes suggestions for its content, some of which may be useful to transcribe here: </p>
+						<p style="padding-left: 36px;">[A] unit description always includes the following three fundamental elements: (1) the map-unit label (for example, Tml), (2) the name of the unit (for example, Monterey Formation), and (3) the unit’s age or stratigraphic position, listed from youngest to oldest (for example, Pliocene and Miocene). These elements are followed by the unit description, which contains information such as lithologic content, color, grain size, bedding characteristics, porosity, permeability, fracture characteristics, mineral or fossil content, remanent magnetization, and thickness. Correlation with other units, the nature of a unit’s upper and lower contacts, any radiometric or other types of age determinations, the sources of specific information, and, if applicable, more detailed stratigraphic ages &ast;&ast;&ast; also may be provided. Stratigraphic or lithologic details are limited to data from within the map area, although a brief discussion of correlations with rock units in nearby areas may be appropriate. Reference citations to other published works also may be included.</p> 
+						<p style="padding-left: 36px;">Map-unit descriptions in a DMU typically are written in an abbreviated, telegraphic style in which complete sentences are not necessary. Nonessential articles (“a,” “an,” “the”) usually are omitted. A notable exception is that the article “the” is retained before a map-unit name. In many DMU sentences, the word “unit” (in singular form) is the implicit subject and commonly is omitted; however, retaining the word “unit” is recommended for clarity (rather than using a unit symbol) when referring to a unit within its own description. Sentences may also begin with a specific subject, such as “Deposits,” “Beds,” or “Flows,” if desired.</p> 
+						<p style="padding-left: 36px;">The order of describing lithology may differ from map to map, but it should be consistent within a given DMU. Features such as color, permeability, and gradations in grain size usually modify the lithologic term. Commas are used to separate all strings of descriptive terms except the final one before the lithologic term, as the following example shows:</p>
+						<p style="padding-left: 108px; text-indent: -36px;"><strong>Curtis Formation (Jurassic)</strong>—Consists of interbedded light-gray, fine- to coarse-grained, poorly sorted, thickly bedded sandstone, pale-green shale, and pale-blue limestone</p>
+						<p style="padding-left: 36px;">To separate ideas within a description, periods or semicolons may work better than conjunctions. Lengthy unit descriptions may be divided into paragraphs. Periods are omitted at the end of each description, except when it is split into paragraphs (in such cases, a period is included at the end of every paragraph except the last one). If entries are fairly short and no one lithology predominates, normal word order (for example, “pale-green shale and pale-blue limestone”) may read more smoothly than inverted order, but if an entry is long and has a string of modifiers, an inverted sentence structure may be easier to follow:</p>
+					<p style="padding-left: 108px; text-indent: -36px;"><strong>Curtis Formation (Jurassic)</strong>—Interbedded sandstone, shale, and limestone. Sandstone, light-gray, fine- to coarse-grained, poorly sorted, and thickly bedded. Shale, pale-green to gray and fine- to medium-bedded. Limestone, pale-blue to light-gray, fine-grained, and medium-bedded</p>
+						<p style="padding-left: 36px;">Other information that characterizes the entire unit (for example, magnetization, fossil or mineral content, radiometric age, and so on) usually follows. The order in which such features are listed may depend on their significance in the mind of the author, but the style should be consistent throughout the description.</p>
+						<p>Although not specifically prescribed in STA8 (USGS, in press), we submit that listing DMU elements in a consistent manner facilitates map comprehension. To that end, we offer R.E. Wells’ (USGS, written commun., 2010) suggestion to use the following basic order for listing elements in map-unit descriptions in a DMU: lithology (dominant and subordinate); color; induration; grain size; mineralogy; bedding characteristics; interpreted facies; unit thickness; nature of contacts; fossil content/stage/zone; magnetic polarity; correlation with other units; radiometric age; and data sources where needed.</p>
+						<p>We note that not all map units in a DMU need all of these descriptive elements; also, volcanic rocks, plutonic rocks, metamorphic rocks, and surficial deposits require somewhat different approaches. Nevertheless, the main elements as articulated by Wells are relevant for most map units. We further note that map-unit descriptions in a DMU should emphasize the essential character of each unit and how it is distinguished in the field from nearby units. In poorly exposed terrain, it can be a challenge to write a map-unit description that accurately expresses no more than what little can be seen or is known about a map unit.</p>
+					<h3 class="h4">Populating the DescriptionOfMapUnits Table</h3>
+						<p>All map units (including units in cross sections) in the DMU need an entry in the DescriptionOfMapUnits table. Any map units shown as overlays need entries as well. Entries should also include map units that traditionally are not listed in the DMU, such as “water”, “glacier”, or “unmapped area”, as well as all geologic units that are listed as parent units in the DMU but are not represented as polygons on the map or in the cross sections.</p> 			
+						<p>Headings and headnotes in the DMU also need entries in the DescriptionOfMapUnits table: headings are stored in the Name field, and headnotes are stored in the Description field. An example of the translation of part of a DMU into a DescriptionOfMapUnits table is provided in <a href="appendix-three.html">appendix 3</a>.</p>
+						<p>The DescriptionSourceID field commonly points to Source values = “this report” or “modified from <em>&lt;earlier report&gt;”</em>.</p>
+					<h3 class="h4">Order and Rank of Map Units</h3>
+						<p>The order and rank of map units and headings in a DMU carry a significant amount of information. In the printed DMU, order is explicit and rank is expressed by font and paragraph style. In the DescriptionOfMapUnits table, where order is easily lost by sorting and text is unformatted, order and rank are expressed by values in the HierarchyKey field. Examples of the content of the HierarchyKey field and its construction are provided in <a href="appendix-three.html">appendix 3</a>.</p>
+						<p>We wish to enable generation of the formatted text DMU from the DescriptionOfMapUnits table, both to facilitate report production and to test that the database is capturing essential content in the report. In most cases, font and paragraph style in the printed DMU can be calculated from values in HierarchyKey and MapUnit (the latter to test whether a DescriptionOfMapUnits row corresponds to a mapped unit or is a heading). However, we have found that (1) such automated text generation requires links to the appropriate parts of a document template, and (2) additional information is needed to distinguish use of a group or formation as a heading from its use as an unmapped parent unit (that is, only its subunits have been mapped). The ParagraphStyle field is included to meet these needs (see <a href="#table-14">table 14</a> for an example of values). In most—but not all—cases, ParagraphStyle values can be calculated from values of HierarchyKey and MapUnit. The consequent partial redundancy between HierarchyKey and ParagraphStyle fields allows for some automated checking of the DescriptionOfMapUnits table for logical consistency.</p>
+						<p>As a practical matter, values in the ParagraphStyle field and their corresponding definitions in the Glossary table should correspond to the formatting styles prescribed by an organization’s publication standards and guidelines. If templates for these styles are available, they may be incorporated into a script that automates much—if not all—of the construction of a formatted DMU from the DescriptionOfMapUnits table.</p>
+		</div>
+		<div class="white-bg">
+			<h2 id="dataSources">DataSources (Nonspatial Table)</h2>
+				<p>DataSources is a nonspatial table that identifies the sources for the content of the geologic map database. Table 15 describes the fields (and their values) in the DataSources table, and table 16 provides some example records.</p>
+					<p class="tableCap" id="table-15"><strong>Table 15.</strong> Fields in DataSources (a nonspatial table).<br>
+					<span class="tableSmall">[See also, tables <a href="database-design.html#table-6">6</a>, 16]</span></p>
+					<table class="table-bordered other-table">
+						<tr>
+							<th width="10%">Field name</th>
+							<th width="30%">Description</th>
+							<th width="60%">Notes</th>
+						</tr>
+						<tr>
+							<td>Source</td>
+							<td>Short, terse, easily understood ASCII-character<sup><span class="footnote" data-toggle="modal" data-target="#table14one">1</span></sup> identifier for a data source</td>
+							<td>Contains brief citation. For DataSources_ID = “DAS1”, Source = “this report” (by convention). If source is another publication, provide full reference citation in Notes field. Null values not permitted</td>
+						</tr>
+						<tr>
+							<td>Notes</td>
+							<td>Optional field</td>
+							<td>Free text for additional information specific to this data source. Provide full reference citation(s) here (if applicable). Processing or data acquisition procedures may be described here. Null values permitted</td>
+						</tr>
+						<tr>
+							<td>URL</td>
+							<td>Optional field</td>
+							<td>Contains link, either online URL or Digital Object Identifier (DOI), to either data source or full description of data source. Null values permitted</td>
+						</tr>							
+						<tr class="border-bottom">
+							<td>DataSources_ID</td>
+							<td>Primary key</td>
+							<td>Examples of values are “DAS1”, “DAS2”. Values must be unique in database. Null values not permitted</td>
+						</tr>							
+					</table>	
+					<p class="tableCap" id="table-16"><strong>Table 16.</strong> Examples of records in a DataSources table.<br>
+					<span class="tableSmall">[Abbreviations: DEM, digital elevation model; ft, foot (feet); K-Ar, potassium-argon; PP, Professional Paper; USGS, U.S. Geological Survey. See also, tables <a href="database-design.html#table-6">6</a>, 15]</span></p>
+					<table class="table-bordered other-table">
+						<tr>
+							<th width="30%">Source</th>
+							<th width="50%">Notes</th>
+							<th width="20%">DataSources_ID</th>
+						</tr>
+						<tr>
+							<td>this report</td>
+							<td>field compilation automated by A. Digitdroid, using georeferenced scan of greenline mylar, Esri ArcScan tools, and manual editing</td>
+							<td>DAS1</td>
+						</tr>
+						<tr>
+							<td>this report, interpreted from 6-ft lidar DEM</td>
+							<td>data acquired winter 2003-2004 by Puget Sound Lidar Consortium</td>
+							<td>DAS2</td>
+						</tr>
+						<tr>
+							<td>this report, Ralph Haugerud field data, 2005</td>
+							<td></td>
+							<td>DAS3</td>
+						</tr>	
+						<tr>
+							<td>USGS PP 901</td>
+							<td>King, P.B., and Beikman, H.M., 1974, Explanatory text to accompany the geologic map of the United States: U.S. Geological Survey Professional Paper 901, 40 p</td>
+							<td>DAS4</td>
+						</tr>	
+						<tr>
+							<td>C.A. Hopson, written commun., 2005</td>
+							<td>sketch map of lower Chelan creek, used for contact between tonalite phase and gabbro phase, scale 1:24,000. C.A. Hopson, University of California, Santa Barbara, written commun., 17 July 2005</td>
+							<td>DAS5</td>
+						</tr>	
+						<tr>
+							<td>Beta Laboratories, Report 1999-451</td>
+							<td>K-Ar dates determined using constants from Steiger, R.H., and Jager, E., 1977, Subcommission on geochronology: Convention on the use of decay constants in geo and cosmochronology: Earth and Planetary Science Letters, v. 36, p. 359-362</td>
+							<td>DAS6</td>
+						</tr>	
+						<tr>
+							<td>Jackson, 1997</td>
+							<td>cited in Glossary table for sources of term definitions. Jackson, J.A., ed., 1997, Glossary of Geology (4th ed.): Alexandria, Va., American Geological Institute, 657 p.</td>
+							<td>DAS7</td>
+						</tr>								
+						<tr class="border-bottom">
+							<td>modified from DAS5</td>
+							<td>S. Richard digitized 3 new large landslides based on 2006 aerial photography</td>
+							<td>DAS8</td>
+						</tr>							
+					</table>							
+				<p>All features and table entries must be associated with a data source. For maps that contain all new information and use a single vocabulary source, the DataSources table will be very short. For compilations that contain data from many sources that have been modified and (or) reinterpreted so that the data source has effectively been changed, the DataSources table will become longer and quite useful. It is worth noting that GeMS does not prescribe the level of detail or depth of provenance that is contained in the DataSources table. We recognize that the amount or level of source lineage recorded on a feature-level basis often is a function of the time and resources available, and so it is a decision that needs to be made by the mapper or compiler and the publishing agency. Some may choose to only cite either publication references or “this report”; others may cite only the original report in which the data first appeared; still others may record the person compiling the map and the year as the data source because they may have a tool that easily captures this data. All are acceptable in the GeMS schema, although their actual usefulness may vary.</p>
+		</div>
+		<div class="white-bg">
+			<h2 id="geoMaterialDict">GeoMaterialDict (Nonspatial Table)</h2>
+				<p>GeoMaterialDict is a nonspatial table that provides definitions and a hierarchy for GeoMaterial names prescribed by the GeMS database schema. Table 17 describes the fields (and their values) in the GeoMaterialDict table.</p>
+					<p class="tableCap" id="table17"><strong>Table 17.</strong> Fields in GeoMaterialDict (a nonspatial table).<br>
+					<span class="tableSmall">[Abbreviation: DMU, Description of Map Units. See also, <a href="required.html#table-14">table 14</a>]</span></p>
+					<table class="table-bordered other-table">
+						<tr>
+							<th width="10%">Field name</th>
+							<th width="30%">Description</th>
+							<th width="60%">Notes</th>
+						</tr>
+						<tr>
+							<td>HierarchyKey</td>
+							<td>Text string that indicates hierarchy of entries within list of GeoMaterial terms</td>
+							<td>Text string has form of “n-n-n”, “nn-nn”, “nn-nn-nn”, “nnn-nnn”, or similar (see discussion in <a href="appendix-three.html">appendix 3</a>); each dash-delimited fragment of string (1) is numeric, (2) has same length as others in string and in <a href="#descriptionOfMapUnits">DescriptionOfMapUnits table</a>, and (3) is left-padded with zeroes if values are greater than 9 (that is, if they exceed one digit). Examples of values are shown in <a href="appendix-three.html">appendix 3</a>, which illustrates HierarchyKey values of several DMUs. Documents, for example, that “limestone” (HierarchyKey = “01-02-02-01”) is a kind of “carbonate rock” (HierarchyKey = “01-02-02”), which is a kind of “sedimentary rock” (HierarchyKey = “01-02”), which is a kind of “sedimentary material” (HierarchyKey = “01”)</td>
+						</tr>
+						<tr>
+							<td>GeoMaterial</td>
+							<td>Name of GeoMaterial unit</td>
+							<td>Terms used to populate GeoMaterial field in <a href="#descriptionOfMapUnits">DescriptionOfMapUnits table</a></td>
+						</tr>
+						<tr>
+							<td>IndentedName</td>
+							<td>GeoMaterial name with indentation that corresponds to rank of entry within hierarchy</td>
+							<td>Useful for visually portraying hierarchy of GeoMaterial terms</td>
+						</tr>							
+						<tr class="border-bottom">
+							<td>Definition</td>
+							<td>Definition of GeoMaterial name</td>
+							<td>For example, GeoMaterial = “limestone” has Definition = “carbonate sedimentary rock, consisting chiefly of calcite”</td>
+						</tr>							
+					</table>						
+				<p>The GeoMaterialDict table will be installed automatically in any database created with the script <em>GeMS_CreateDatabase_Arc10.py</em> (available at <a href="https://github.com/usgs/GeMS_Tools" target="_blank">https://github.com/usgs/GeMS_Tools</a> and at <a href="https://github.com/usgs/gems-tools-pro" target="_blank">https://github.com/usgs/gems-tools-pro</a> or their replacements. Note that users of the GeMS schema do not create this table; furthermore, this table should not be modified by authors or publishers of individual maps.</p>
+		</div>
+		<div class="white-bg">
+			<h2 id="glossary">Glossary (Nonspatial Table)</h2>
+				<p>Glossary is a nonspatial table that provides definitions for some of the terminology used in a GeMS database. Table 18 describes the fields (and their values) in the Glossary table, and table 19 provides some examples of its records. Note that values in the Term field must have unique definitions within the database because they are used as foreign keys to the Glossary table. For example, use of “fold axis” as a Type term in GeologicLines, with a definition of “intersection of fold axial plane with the Earth’s surface”, and “fold axis” as a Type term in OrientationPoints, with a definition of “orientation of fold hinge”, is not possible (instead, one might consider using “minor fold axis” or something similar as the Type term for the point feature). Terminology that requires definition in the Glossary table includes all values in the Type, ExistenceConfidence, IdentityConfidence, ScientificConfidence, ParagraphStyle, and AgeUnits fields. Terminology used only in the Description field of the DescriptionOfMapUnits table should not be defined here.</p>
+					<p class="tableCap"><strong>Table 18.</strong> Fields in Glossary (a nonspatial table).<br>
+					<span class="tableSmall">[Abbreviation: K-Ar, potassium-argon. See also, table 19]</span></p>
+					<table class="table-bordered other-table">
+						<tr>
+							<th width="10%">Field name</th>
+							<th width="30%">Description</th>
+							<th width="60%">Notes</th>
+						</tr>
+						<tr>
+							<td>Term</td>
+							<td>Geologic concept, feature, phenomenon, or other terminology being defined</td>
+							<td>Examples of values are “foliation”, “syncline axis”, “contact”, “thrust fault”, “certain”, “low”, “fission track”, “K-Ar”. Values must be unique within database. Null values not permitted</td>
+						</tr>
+						<tr>
+							<td>Definition</td>
+							<td>Definition of value in Term</td>
+							<td>Null values not permitted</td>
+						</tr>
+						<tr>
+							<td>DefinitionSourceID</td>
+							<td>Identifies source of definition. Foreign key to DataSources table</td>
+							<td>Null values not permitted</td>
+						</tr>							
+						<tr class="border-bottom">
+							<td>Glossary_ID</td>
+							<td>Primary key</td>
+							<td>Example of values are “GLO1”, “GLO2”. Values must be unique in database. Null values not permitted</td>
+						</tr>							
+					</table>	
+					<p class="tableCap"><strong>Table 19.</strong> Examples of records in a Glossary table.<br>
+					<span class="tableSmall">[See also, table 18]</span></p>
+					<table class="table-bordered other-table">
+						<tr>
+							<th width="10%">Term</th>
+							<th width="50%">Definition</th>
+							<th width="20%">DefinitionSourceID</th>
+							<th width="20%">Glossary_ID </th>
+						</tr>
+						<tr>
+							<td>contact</td>
+							<td>Line denoting unfaulted [depositional, intrusive, metamorphic, etc.] boundary between two geologic map units</td>
+							<td>DAS1</td>
+							<td>GLO01</td>
+						</tr>							
+						<tr class="border-bottom">
+							<td>biotite isograd</td>
+							<td>Line marking first appearance, going up grade, of newly formed biotite in metamorphosed siltstones and shales</td>
+							<td>DAS1</td>
+							<td>GLO02</td>
+						</tr>							
+					</table>					
+				<p>If no intellectual property restrictions exist, it is permissible (and recommended) to replicate all or parts of an external glossary in the Glossary table, but please provide appropriate credit for the definitions in the DataSources table by means of the DefinitionSourceID field. If such restrictions preclude replicating a definition in the Glossary table, the term should still be listed in the table, along with (if possible) a brief, paraphrased definition and a note that refers the user to the publication cited in the definitionsource record.</p>
+		</div>
+			<div class="yellow-box">
+				<h2>Citation</h2>
+				<div class="hangingIndent">
+					<p>U.S. Geological Survey National Cooperative Geologic Mapping Program, 2020, GeMS (Geologic Map Schema)—A standard format for the digital publication of geologic maps: U.S. Geological Survey Techniques and Methods, book 11, chap. B10, 74 p., <a href="https://doi.org/10.3133/tm11B10" target="_blank">https://doi.org/10.3133/tm11B10</a>.</p>
+				</div>
+			</div>	
+     </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 text-center">     	
+				<p><strong>Links</strong><br>
+					<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">National Geologic Map Database "GeMS" Site</a>
+					<br><a href="https://pubs.er.usgs.gov/publication/tm11B10" target="_blank">GeMS (Geologic Map Schema) Report</a></p>
+                </div>
+				<div class="col-lg-6 text-center">                
+                    <a href="https://www.usgs.gov/" target="_blank"><img src="images/USGSlogo.png" alt="usgs-logo" class="img-fluid my-3 footer-logo mr-4"></a>
+					<a href="https://www.stategeologists.org/" target="_blank"><img src="images/AASGlogo.png" alt="aasg-logo" class="img-fluid my-3 footer-logo"></a>
+                    <p class="mt-3">Copyright © 
+                        <script type="text/javascript">
+                            document.write(new Date().getFullYear());
+                        </script>
+                    </p>
+                </div>
+            
+            </div>
+            
+        </div>        
+    </footer>
+	
+	<div class="modal fade" id="one" tabindex="-1" role="dialog" aria-labelledby="one" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>1</sup>ASCII, American Standard Code for Information Interchange; ASCII characters mainly consist of lower and upper case letters, numerals, and certain punctuation characters (specifically, ones that can be accessed using the Shift key).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="thirteen" tabindex="-1" role="dialog" aria-labelledby="thirteen" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>13</sup>An ellipsis (***) indicates where text has been omitted from the quotation.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="table14one" tabindex="-1" role="dialog" aria-labelledby="table14one" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>1</sup>ASCII, American Standard Code for Information Interchange; ASCII characters mainly consist of lower and upper case letters, numerals, and certain punctuation characters (specifically, ones that can be accessed using the Shift key).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="two" tabindex="-1" role="dialog" aria-labelledby="two" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>2</sup>Note that formal names should be verified in the U.S. Geologic Names Lexicon (Geolex; see <a href="https://ngmdb.usgs.gov/Geolex/" target="_blank">https://ngmdb.usgs.gov/Geolex/</a>); if your usage does not agree with that in Geolex, please contact the Geologic Names Committee secretary (at <a href="mailto:gems@usgs.gov">gems@usgs.gov</a>).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="three" tabindex="-1" role="dialog" aria-labelledby="three" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>3</sup>RGB = red/green/blue color space, used in computer monitors and televisions.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="four" tabindex="-1" role="dialog" aria-labelledby="four" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>4</sup>A tuple is a sequence (or ordered list) of elements.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	
+	<a href="#top">
+        <div id="backup">
+            Back to Top &uarr;
+            <span class="sr-only">Go back to top of page.</span>
+        </div>
+    </a>  
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>  
+	
+	<script>
+    $(document).ready(function(){
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $('#backup:hidden').stop(true, true).fadeIn();
+            } else {
+                $('#backup').stop(true, true).fadeOut();
+            }
+        });
+
+        $('a[href^="#"]').on('click',function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 900, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    });
+    </script>
+	
+  </body>
+
+</html>

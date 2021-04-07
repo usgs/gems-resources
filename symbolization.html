@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="USGS (U.S. Geological Survey) GeMS (Geologic Map Schema)">
+
+    <title>GeMS — Symbolization</title>
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/gems.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg text-white fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">GeMS — Geologic Map Schema</a>
+            <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+					<!--Data Dropdown-->
+					<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownDataOne" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Report Breakdown</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownDataOne">
+						<a class="dropdown-item" href="background.html">Background</a>
+						<a class="dropdown-item" href="content.html">Content of a Geologic Map</a>
+						<a class="dropdown-item" href="database-design.html">Database Design</a>
+						<a class="dropdown-item" href="required.html">Required Elements</a>
+						<a class="dropdown-item" href="as-needed.html">As-Needed Elements</a>
+						<a class="dropdown-item" href="symbolization.html">Symbolization</a>
+						<a class="dropdown-item" href="references.html">References</a>
+						<a class="dropdown-item" href="appendices.html">Appendices</a>
+						</div>
+                    </li>					
+					<!--Data Dropdown-->				
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content --> 
+	<header class="business-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 my-sm-4 pt-3 pt-sm-0 background-text">
+                    <h1 class="page-header" id="top">Symbolization</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+	<div class="container">
+		<div class="white-bg">
+            <h2>Overview</h2>
+                <p>Symbolization is a critical aspect of a geologic map. Not only does it illustrate the geologist’s interpretations, it also may depict (by means of color, type size, or other graphical elements) subtleties of interpretation and (or) emphasis that otherwise may not be obvious in the database. Creating adequate symbolization of a geologic map database can be a significant amount of work, but providing an acceptable set of symbols (and symbolization instructions) is of significant value to database users. For these reasons, we require that geologic-map databases include symbols and symbolization instructions to achieve a preferred visualization of the map.</p>
+				<p>In GeMS, symbolization consists of (1) values of Symbol for all features (use null values where a database feature is not symbolized on the map), (2) an ArcGIS .style file that contains the symbols (for areas, lines, and points) used on the preferred visualization, and (3) an Esri map-composition (.mxd) file. Alternatively, authors may choose to use Esri’s cartographic representations to symbolize one or more of the map’s layers, in which case a .style file may not be needed.</p>
+				<p>Generally speaking (and to the extent that it is possible), line and point symbolization should follow the FGDC Digital Cartographic Standard for Geologic Map Symbolization (<a href="https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php" target="_blank">FGDC, 2006</a>). Most of the symbols in the FGDC cartographic standard have been implemented as an ArcGIS .style file (“FGDC_GSC_20100414.style”) by members of the Geological Survey of Canada; this .style file and its associated font files are available under the Resources heading at the GeMS website (<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">https://ngmdb.usgs.gov/Info/standards/GeMS/</a>). Note that both the .style file and all its associated font files need to be installed for the .style file to function correctly. Note also that, to use this .style file, it is necessary to left-pad the original FGDC symbol identifiers with zeroes so that each part of the identifier has a two- or three character width (for example, symbol 1.1.3 becomes 01.01.03, and symbol 1.1.25 becomes 01.01.25).</p>
+				<p>Although not a requirement, CMYK color fills for map-unit polygons may be selected from the FGDC cartographic standard’s CMYK Color Chart (FGDC, 2006). An ArcGIS .style file (“FGDCcmyk.style”) of this chart is available under the Resources heading at the GeMS website (<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">https://ngmdb.usgs.gov/Info/standards/GeMS/</a>).</p>
+				<p>Also not a requirement, geologic age symbol characters are best displayed using the FGDCGeoAge font (U.S. Geological Survey, 2006; available at <a href="https://pubs.usgs.gov/tm/2006/11A02/" target="_blank">https://pubs.usgs.gov/tm/2006/11A02/</a>). The OpenType version (“FGDCGeoAge.otf”) of this font is recommended; it is available under the Resources heading at the GeMS website (<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">https://ngmdb.usgs.gov/Info/standards/GeMS/</a>).</p>
+				<p>At this time (2020), a subset of the FGDC cartographic standard’s library of symbols also is available as cartographic representations through Esri’s Geologic Mapping Template (“GMT”) (available at <a href="https://www.arcgis.com/home/item.html?id=bb02aa75305f40ff87fb6106aa297da9" target="_blank">https://www.arcgis.com/home/item.html?id=bb02aa75305f40ff87fb6106aa297da9</a>; see <a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">https://ngmdb.usgs.gov/Info/standards/GeMS/</a> for updated links and information). Esri’s GMT stores the symbols in feature classes that have been organized according to the sections in the FGDC cartographic standard. Note, however, that this method of organization is not compliant with GeMS, primarily because it considers contacts and faults to be separate feature classes.</p>
+				<p>If the FGDC cartographic standard does not define a suitable symbol for a particular feature on a map, the standard may be supplemented with either customized symbols or with FGDC symbols that have been repurposed for the map. Such repurposed symbols need to be identified in the RepurposedSymbols table, which is required if FGDC symbols have been repurposed.</p>
+				<p>For the convenience of users who do not have access to an ArcGIS license, we also suggest that an ArcReader document (.pmf file) be provided (see <a href="content.html#table-4">table 4</a>), along with descriptions of the symbolization (in other words, for map unit areas, populate the AreaFillRGB and AreaFillPatternDescription fields in the <a href="required.html#descriptionOfMapUnits">DescriptionOfMapUnits</a> table with appropriate values), in order for symbolization to be replicated in other GIS programs or in desktop publishing software.</p>
+		</div>
+		<div class="white-bg">
+			<h2 id="repurposedSymbols">RepurposedSymbols (Nonspatial Table)</h2>
+				<p>As stated above, line and point symbolization should generally follow the FGDC Digital Cartographic Standard for Geologic Map Symbolization (FGDC, 2006) to the greatest extent possible. However, if the FGDC cartographic standard does not include a symbol that is suitable for a particular feature on the geologic map, the standard may be supplemented with customized symbols or with FGDC symbols that have been repurposed for the map. Such repurposed symbols should be identified in the RepurposedSymbols table. Table 32 describes the fields (and their values) that populate the RepurposedSymbols table.</p>
+					<p class="tableCap"><strong>Table 32.</strong> Fields in RepurposedSymbols (an as-needed nonspatial table).<br>
+					<span class="tableSmall">[Abbreviation: FGDC, Federal Geographic Data Committee]</span></p>
+					<table class="table-bordered other-table">
+					<tr>
+						<th width="20%">Field name</th>
+						<th width="30%">Description</th>
+						<th width="50%">Notes</th>
+					</tr>			
+					<tr>
+						<td>FgdcIdentifier</td>
+						<td>Zero-padded identifier string (derived from identifier in FGDC cartographic standard)</td>
+						<td>Example of value is “01.01.03” (original FGDC identifier was “1.1.3”). Null values not permitted</td>
+					</tr>
+					<tr>
+						<td>OldExplanation</td>
+						<td>Original symbol description from FGDC cartographic standard</td>
+						<td>Example of value is “contact--identity and existence certain, location approximate”. Null values not permitted</td>
+					</tr>
+					<tr>
+						<td>NewExplanation</td>
+						<td>Symbol usage as repurposed on this map</td>
+						<td>Example of value is “limit of tephra deposits from Holocene eruptions of Glacier Peak”. Null values not permitted</td>
+					</tr>
+					<tr>
+						<td>RepurposedSymbol_ID</td>
+						<td>Primary key</td>
+						<td>Examples of values are “RSY1”, “RSY2”. Values must be unique in database. Null values not permitted</td>
+					</tr>
+					</table>				
+            </div>
+			<div class="yellow-box">
+				<h2>Citation</h2>
+				<div class="hangingIndent">
+					<p>U.S. Geological Survey National Cooperative Geologic Mapping Program, 2020, GeMS (Geologic Map Schema)—A standard format for the digital publication of geologic maps: U.S. Geological Survey Techniques and Methods, book 11, chap. B10, 74 p., <a href="https://doi.org/10.3133/tm11B10" target="_blank">https://doi.org/10.3133/tm11B10</a>.</p>
+				</div>
+			</div>	
+     </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 text-center">     	
+				<p><strong>Links</strong><br>
+					<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">National Geologic Map Database "GeMS" Site</a>
+					<br><a href="https://pubs.er.usgs.gov/publication/tm11B10" target="_blank">GeMS (Geologic Map Schema) Report</a></p>
+                </div>
+				<div class="col-lg-6 text-center">                
+                    <a href="https://www.usgs.gov/" target="_blank"><img src="images/USGSlogo.png" alt="usgs-logo" class="img-fluid my-3 footer-logo mr-4"></a>
+					<a href="https://www.stategeologists.org/" target="_blank"><img src="images/AASGlogo.png" alt="aasg-logo" class="img-fluid my-3 footer-logo"></a>
+                    <p class="mt-3">Copyright © 
+                        <script type="text/javascript">
+                            document.write(new Date().getFullYear());
+                        </script>
+                    </p>
+                </div>
+            
+            </div>
+            
+        </div>        
+    </footer>
+	<a href="#top">
+        <div id="backup">
+            Back to Top &uarr;
+            <span class="sr-only">Go back to top of page.</span>
+        </div>
+    </a>  
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>  
+	
+	<script>
+    $(document).ready(function(){
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $('#backup:hidden').stop(true, true).fadeIn();
+            } else {
+                $('#backup').stop(true, true).fadeOut();
+            }
+        });
+
+        $('a[href^="#"]').on('click',function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 900, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    });
+    </script>
+	
+  </body>
+
+</html>

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="USGS (U.S. Geological Survey) GeMS (Geologic Map Schema)">
+
+    <title>GeMS — As-Needed Elements</title>
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/gems.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg text-white fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">GeMS — Geologic Map Schema</a>
+            <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+					<!--Data Dropdown-->
+					<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownDataOne" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Report Breakdown</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownDataOne">
+						<a class="dropdown-item" href="background.html">Background</a>
+						<a class="dropdown-item" href="content.html">Content of a Geologic Map</a>
+						<a class="dropdown-item" href="database-design.html">Database Design</a>
+						<a class="dropdown-item" href="required.html">Required Elements</a>
+						<a class="dropdown-item" href="as-needed.html">As-Needed Elements</a>
+						<a class="dropdown-item" href="symbolization.html">Symbolization</a>
+						<a class="dropdown-item" href="references.html">References</a>
+						<a class="dropdown-item" href="appendices.html">Appendices</a>
+						</div>
+                    </li>				
+					<!--Data Dropdown-->			
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content --> 
+	<header class="business-header">
+        <div class="container">		
+            <div class="row">
+                <div class="col-lg-12 my-sm-4 pt-3 pt-sm-0 background-text">
+                    <h1 class="page-header" id="top">As-Needed Elements</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+	<div class="container">
+		<div class="nav">
+			<div class="navTextCenter">
+				<span><a href="#guidelines">Guidelines for Naming and Designing Additional Feature Classes</a> | <a href="#structure">Structure of Point Data</a> | <a href="#examples">Examples of As-Needed Point Feature Classes</a> | <a href="#otherExamples">Examples of Other As-Needed Feature Classes</a></span> 
+			</div>
+		</div>	
+		<div class="white-bg">
+			<h2>Overview</h2>
+			<p>Some geologic maps contain features other than contacts, faults, and map-unit polygons. If such features are present in a geologic map report, they should be digitally encoded in the map database. If such elements are not present, the corresponding feature classes need not be included in the database; therefore, these feature classes are as-needed elements. Examples of these types of features are foliation, lineation, and bedding measurements; various sample localities for fossil, geochemical, and geochronological analyses; localities of field photographs; fold axes (or, more precisely, traces of fold-hinge surfaces); structure contours; concentration contours; former ice limits and ice-flow lines; cross-section lines; and areas of mineralization or manmade fill (both commonly depicted as overlays).</p>
+			<p>Many such types of features exist, and there are many ways to partition these types of features into feature classes. At one extreme, each feature type can be represented by a separate feature class, in which case, the Type field of that feature class is redundant. At the other extreme, all feature types that have the same kind of geometry (that is, point, line, or polygon) can be assigned to a single feature class and then differentiated by the Type attribute. In the latter case, one might be tempted to add a plethora of attribute fields to the feature class; however, many attributes are likely to be left unpopulated for many features. For example, if age-sample localities and bedding measurements were recorded in a single point feature class, sample number would be irrelevant for bedding measurements, and strike and dip would be irrelevant for age-sample localities.</p>
+			<p>In discussions with colleagues, we have been unable to agree on a best partitioning because different cases of database use suggest different ways of partitioning. And because we see no best partitioning, we do not prescribe the use of particular as-needed feature classes. Instead, we present guidelines for designing and naming feature classes, we discuss principles that govern the structure of point data, and we present several examples of as-needed feature classes. Note that if a GeMS database uses any of the feature classes described here, such feature classes should conform to these descriptions. For example, do not invent your own GeologicLines feature class that has different attributes than the ones we describe; you are free to create and use an additional feature class, but it needs to have a different name.</p>
+		</div>
+		<div class="white-bg">
+			<h2 id="guidelines">Guidelines for Naming and Designing Additional Feature Classes</h2>
+                <p>When naming and designing additional feature classes, follow these guidelines:</p>
+				<ul>
+					<li>The feature class name emphasizes the identity of the feature class.</li>
+					<li>The feature class name includes one of the terms “Points”, “Lines”, or “Polys” (as appropriate), except when it would be redundant (for example, ContactsAndFaults, not ContactsAndFaultsLines, and Stations, not StationPoints).</li>
+					<li>Feature class names and field names typically are compound words written in PascalCase.</li> 
+					<li>Feature class names and field names do not contain spaces or underscores, with one exception (see next guideline).</li>
+					<li>Every feature class has a primary key field named <em>FeatureClassName</em>_ID (note that this is the sole exception to the previous no underscores guideline).</li>
+					<li>Every feature class has at least one <em>source</em>ID field. If each feature has a single source, this field typically is named DataSourceID; if the data source is compound (for example, sample analyses commonly have different sources for the sample location and for the associated sample analysis), there will be multiple <em>source</em>ID fields (for example, LocationSourceID and AnalysisSourceID).</li>
+					<li>The fields ExistenceConfidence, IdentityConfidence, LocationConfidenceMeters, and similar confidence fields are included as appropriate.</li>
+					<li>All fields that contain measured attributes, or attributes that represent real-world quantities (for example, strike, dip, concentration, location confidence), are data type = float; note that it may be necessary to define conventions for representing null values (for example, value = −9) and then document these conventions in the feature-class metadata.</li>
+					<li>All attributes of a feature class should be populated for most features: if a feature class has one or more attributes that are not applicable to some subset of features in the class, consider placing those features in a separate feature class that has a more appropriate subset of attributes.</li>
+					<li>Consider combining small feature classes that have a common attribute structure.</li>
+				</ul>
+				<p>In the sections that follow, we discuss the basic structure of point data and point feature classes in general, and we describe four examples of as-needed point feature classes (“<a href="#orientationpoints">OrientationPoints</a>”, “<a href="#geochronpoints">GeochronPoints</a>”, “<a href="#stations">Stations</a>”, and “<a href="#mapunitpoints">MapUnitPoints</a>”). We also discuss the as-needed feature classes “<a href="#geologiclines">GeologicLines</a>”, “<a href="#mapunitlines">MapUnitLines</a>”, “<a href="#cartographiclines">CartographicLines</a>”, “<a href="#isovaluelines">IsoValueLines</a>”, “<a href="#overlayPoly">MapUnitOverlayPolys</a>”, “<a href="#overlayPoly">OverlayPolys</a>”, and “<a href="#datasourcepolys">DataSourcePolys</a>”. Other possible as-needed feature classes might include “GeochemPoints”, “PhotoPoints”, “FieldNotePoints”, “SamplePoints”, “FossilPoints”, “FoldLines”, and “DikeLines”.</p>
+		</div>
+		<div class="white-bg">
+			<h2 id="structure">Structure of Point Data</h2>
+                <p>Observations of structure orientations and mineral occurrences, as well as collections of samples for geochemical, paleontologic, geochronologic, and other kinds of analyses, are made at field stations. Two modes are possible for representing such observations, localities, and related analyses and their accompanying locations:</p>
+				<ul>
+					<li>A normalized mode, in which (1) a “Stations” feature class stores location information and data specific to the station, (2) a nonspatial “Sample” table stores information on samples related to stations, and (3) other nonspatial tables store observations and analyses, one for each observation or analysis type, related to either a sample or station.</li>
+					<li>A denormalized mode, in which there is a separate feature class for each type of observation or analysis; in some cases, this results in duplicate station-location and sample information.</li>
+				</ul>
+				<p>Each mode has advantages. The first mode allows error-resistant editing of location and sample information (the station data is recorded in only one place) and is well suited for data-management and -archiving systems. The second mode facilitates the symbolization and organization of point data in map layers in a GIS viewing environment that does not require joins or filtering, and it is more convenient for exporting analytical information from a source database by simply copying the relevant feature class.</p>
+				<p>Because GeMS is designed primarily for publishing, not creating, geologic map data, we endorse the second mode. However, we note that, to create a GeMS-compliant database, it may be useful to start in the first mode by creating a Stations point feature class that has related data tables (including a Samples table) and then, from these, creating the appropriate data-type-specific point feature classes that will be included in the delivery database.</p>
+					<h3 class="h4">Point Feature Classes in General</h3>
+						<p>We recommend that typical point feature classes contain certain basic fields (table 20). We also recommend that sample-oriented point feature classes include certain additional fields (table 21). Note that the MapUnit field, whose value is to be obtained by intersection of a point feature class with the <a href="required.html#mapunitpoly">MapUnitPolys feature class</a>, is included so that a point feature class may be extracted from its host database and used elsewhere while retaining some geologic context for the point features. Values of MapUnit should not be null, except for points that lie outside the extent of the MapUnitPolys feature class.</p>
+							<p class="tableCap" id="table-20"><strong>Table 20.</strong> Fields to be included in a typical point feature class.<br>
+								<span class="tableSmall">[Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the Type field) must be defined in Glossary table. See also, tables 21 through 25]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>
+									<tr>
+										<td><span class="magentaBackground">Type</span></td>
+										<td>Specifies type of point feature represented by this data point</td>
+										<td>Examples of values are “fossil locality”, “well”. Values must be defined in Glossary table. Null values not permitted</td>
+									</tr>
+									<tr>
+										<td>Symbol</td>
+										<td>References a point symbol</td>
+										<td>Point symbols must be included in accompanying .style file. Null values (which would indicate point data are not shown on map) permitted; if Esri cartographic representations are used to symbolize point data, value may be null. See <a href="database-design.html#table-10">table 10</a> for examples of Symbol (and Label) fields</td>
+									</tr>
+									<tr>
+										<td>Label</td>
+										<td>Describes text label to accompany this point symbol</td>
+										<td>For structure data, typical values are dip or plunge of measured orientation; for fossil localities, sample numbers are typical values. Null values permitted. See <a href="database-design.html#table-10">table 10</a> for examples of Label (and Symbol) fields</td>
+									</tr>
+									<tr>
+										<td>LocationConfidenceMeters</td>
+										<td>Radius (in meters) of positional-uncertainty envelope around this point feature</td>
+										<td>Data type = float. Null values not permitted; recommend setting value = −9 if value is not known (see discussion above in “Feature-Level Metadata” and example values in <a href="content.html#table-1">table 1</a>)</td>
+									</tr>
+									<tr>
+										<td>PlotAtScale</td>
+										<td>Denominator of smallest map scale at which this point feature should be plotted on map (that is, it should not be plotted at smaller map scales)</td>
+										<td>Data type = float. Prevents crowding on map at small scales and allows display of progressively more data at increasingly larger scales. Null values not permitted; suggest setting default value = 0 ( = display at all scales)</td>
+									</tr>
+									<tr>
+										<td>StationsID</td>
+										<td>Foreign key to Stations point feature class</td>
+										<td>Not needed if table represents simple, nonspecific stations (it would duplicate Stations_ID primary key field). Null values permitted</td>
+									</tr>
+									<tr>
+										<td>MapUnit</td>
+										<td>Records map unit to which this analysis or observation pertains. Foreign key to DescriptionOfMapUnits table</td>
+										<td>Values obtained by intersection with feature class <a href="required.html#mapunitpoly">MapUnitPolys</a>. Null values permitted only for points that lie outside extent of MapUnitPolys feature class</td>
+									</tr>
+									<tr>
+										<td>Notes</td>
+										<td>Optional field</td>
+										<td>Free text for additional information specific to this point feature. Null values permitted</td>
+									</tr>									
+									<tr class="border-bottom">
+										<td><em>TableName</em>_ID</td>
+										<td>Primary key</td>
+										<td>Examples of values are <em>“TableName1”, “TableName2”</em> (substitute actual table name for <em>“TableName”</em>). Values must be unique in database. Null values not permitted</td>
+									</tr>							
+								</table>	
+							<p class="tableCap"><strong>Table 21.</strong> Recommended additional fields to be included in a sample-oriented point feature class.<br>
+								<span class="tableSmall">[See also, tables 20, 22, 23, 24]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>
+									<tr>
+										<td>FieldSampleID</td>
+										<td>Sample number given at time of collection</td>
+										<td>Null values permitted</td>
+									</tr>
+									<tr>
+										<td>AlternateSampleID</td>
+										<td>Museum number, lab number, etc.</td>
+										<td>Null values permitted</td>
+									</tr>								
+									<tr class="border-bottom">
+										<td>MaterialAnalyzed</td>
+										<td>Identifies material that was analyzed</td>
+										<td>Examples of values are “wood”, “whole rock”. Null values permitted</td>
+									</tr>							
+								</table>									
+		</div>
+		<div class="white-bg">
+		   <h2 id="examples">Examples of As-Needed Point Feature Classes</h2>
+					<h3 class="h4" id="orientationpoints">OrientationPoints (Point Feature Class)</h3>
+						<p>Observations of structure point data (for example, bedding attitudes, foliation attitudes, slip vectors measured at a point) may be recorded in OrientationPoints. Note that where multiple measurements are taken at one locality, each measurement is to be represented by a separate, but coincident, point feature. Table 22 describes the fields (and their values) of an OrientationPoints feature class.</p>
+							<p class="tableCap" id="table-22"><strong>Table 22.</strong> Fields in OrientationPoints (an as-needed point feature class in the GeologicMap feature dataset).<br>
+								<span class="tableSmall">[Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the Type and IdentityConfidence fields) must be defined in Glossary table. See also, tables <a href="content.html#table-1">1</a>, <a href="database-design.html#table-9">9</a>, 20, 21]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>
+									<tr>
+										<td><span class="magentaBackground">Type</span></td>
+										<td>Specifies type of geologic feature represented by this database row</td>
+										<td>Examples of values are “bedding”, “upright bedding”, “foliation”, “horizontal lineation”. Values must be defined in Glossary table. Null values not permitted</td>
+									</tr>
+									<tr>
+										<td>Azimuth</td>
+										<td>Strike of planar feature or trend of linear feature, as measured in degrees clockwise from geographic North</td>
+										<td>Data type = float. Values limited to range from 0 to 360; horizontal planar features may have any azimuth value. For planar features, use right-hand rule (that is, dip is to right of azimuth direction). Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>Inclination</td>
+										<td>Dip of planar feature or plunge of linear feature, as measured in degrees down from horizontal</td>
+										<td>Data type = float. Values limited to range from −90 to 90; use negative values when specifying feature vectors (not axes) that point above horizon (for example, a paleocurrent); types specified as horizontal (for example, “horizontal bedding”) should have value = 0. Types specified as vertical (for example, “vertical foliation”) should have value = 90. Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>Symbol</td>
+										<td>References a point symbol</td>
+										<td>Point symbols must be included in accompanying .style file. Null values (which would indicate point data are not shown on map) permitted; if Esri cartographic representations are used to symbolize point data, value may be null. See <a href="database-design.html#table-10">table 10</a> for examples of Symbol (and Label) fields</td>
+									</tr>	
+									<tr>
+										<td>Label</td>
+										<td>Describes text label to accompany this point symbol</td>
+										<td>Typically, value is dip or plunge of measured orientation, rounded to nearest integer and converted to data type = string. Null values permitted. See <a href="database-design.html#table-10">table 10</a> for examples of Label (and Symbol) fields</td>
+									</tr>	
+									<tr>
+										<td>LocationConfidenceMeters</td>
+										<td>Radius (in meters) of positional-uncertainty envelope around this point feature</td>
+										<td>Data type = float. Null values not permitted; recommend setting value = −9 if value is not known (see discussion above in “<a href="content.html#metadata">Feature-Level Metadata</a>”; see also, example values in <a href="content.html#table-1">table 1</a>)</td>
+									</tr>	
+									<tr>
+										<td><span class="magentaBackground">IdentityConfidence</span></td>
+										<td>Indicates how confidently this point feature has been identified as a particular type</td>
+										<td>Typical values are “certain”, “questionable”, “unspecified”. Values must be defined in Glossary table. Null values not permitted; suggest setting default value = “certain”</td>
+									</tr>	
+									<tr>
+										<td>OrientationConfidenceDegrees</td>
+										<td>Estimated circular error (in degrees) of this orientation. For planar features, error is in orientation of pole to plane</td>
+										<td>Data type = float. Null values not permitted; recommend setting value = −9 if value is not known (see discussion above in “<a href="content.html#metadata">Feature-Level Metadata</a>”)</td>
+									</tr>	
+									<tr>
+										<td>PlotAtScale</td>
+										<td>Denominator of smallest map scale at which this point feature should be plotted on map (that is, it should not be plotted at smaller map scales)</td>
+										<td>Data type = float. Prevents crowding on map at small scales and allows display of progressively more data at increasingly larger scales. Null values not permitted; suggest setting default value = 0 ( = display at all scales)</td>
+									</tr>	
+									<tr>
+										<td>StationsID</td>
+										<td>Foreign key to Stations point feature class</td>
+										<td>Multiple observations made at same locality will likely have same StationsID value. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>MapUnit</td>
+										<td>Records map unit to which this observation pertains. Foreign key to DescriptionOfMapUnits table</td>
+										<td>Values obtained by intersection with feature class <a href="required.html#mapunitpoly">MapUnitPolys</a>. Null values permitted only for point features that lie outside extent of MapUnitPolys feature class</td>
+									</tr>	
+									<tr>
+										<td>LocationSourceID</td>
+										<td>Identifies source of location of this point feature. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>OrientationSourceID</td>
+										<td>Identifies source of orientation data for this point feature. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>Notes</td>
+										<td>Optional field</td>
+										<td>Free text for additional information specific to this point feature. Null values permitted</td>
+									</tr>										
+									<tr class="border-bottom">
+										<td>OrientationPoints_ID</td>
+										<td>Primary key</td>
+										<td>Examples of values are “ORP1”, “ORP2”. Values must be unique in database. Null values not permitted</td>
+									</tr>							
+								</table>						
+						<p>The Type field identifies the kind of feature for which the orientation was measured (for example, bedding, overturned bedding, stretching lineation, open joint, etc.). Definitions (included in the Glossary table) of the Type values shall specify the orientation-measurement convention for that Type of feature (for example, strike and dip, trend and plunge, dip direction and dip). Data creators should ensure that multiple measurements taken at a single locality (for example, bedding and cleavage measurements) have the same StationsID value.</p>
+					<h3 class="h4" id="geochronpoints">GeochronPoints (Point Feature Class)</h3>
+						<p>Another example of an as-needed point feature class is GeochronPoints, which records locations of samples collected for geochronological analysis, as well as the associated age analyses (table 23).</p>
+							<p class="tableCap"><strong>Table 23.</strong> Fields in GeochronPoints (an as-needed point feature class in the GeologicMap feature dataset).<br>
+								<span class="tableSmall">[Abbreviations: 14C, carbon-14; ka, thousand years before present; K-Ar, potassium-argon; Ma, million years before present; Rb-Sr, rubidium-strontium; RMSE, root mean square error; yr B.P., years before present. Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the Type, ErrorMeasure, and AgeUnits fields) must be defined in Glossary table. See also, tables <a href="content.html#table-1">1</a>, 20, 21]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>
+									<tr>
+										<td><span class="magentaBackground">Type</span></td>
+										<td>Specifies geochronological method used to determine this age</td>
+										<td>Examples of values are “K-Ar”, “radiocarbon”, “zircon fission track”, “mineral – whole rock Rb-Sr isochron”. Values must be defined in Glossary table. Null values not permitted</td>
+									</tr>
+									<tr>
+										<td>FieldSampleID</td>
+										<td>Sample number given at time of collection</td>
+										<td>Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>AlternateSampleID</td>
+										<td>Lab number</td>
+										<td>Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>MapUnit</td>
+										<td>Records map unit from which analyzed sample was collected. Foreign key to DescriptionOfMapUnits table</td>
+										<td>Values obtained by intersection with feature class <a href="required.html#mapunitpoly">MapUnitPolys</a>. Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>Symbol</td>
+										<td>References a point symbol</td>
+										<td>Point symbols must be included in accompanying .style file. Null values (which would indicate point data are not shown on map) permitted; if Esri cartographic representations are used to symbolize point data, value may be null</td>
+									</tr>	
+									<tr>
+										<td>Label</td>
+										<td>Describes text label to accompany this point symbol</td>
+										<td>For age data, typical values are text-string equivalents of values of NumericAge+AgePlusError-AgeMinusError, or similar. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>LocationConfidenceMeters</td>
+										<td>Radius (in meters) of positional-uncertainty envelope of this point feature</td>
+										<td>Data type = float. Null values not permitted; recommend setting value = −9 if value is not known (see discussion above in “<a href="content.html#metadata">Feature-Level Metadata</a>”; see also, example values in <a href="content.html#table-1">table 1</a>)</td>
+									</tr>	
+									<tr>
+										<td>PlotAtScale</td>
+										<td>Denominator of smallest map scale at which this analysis should be plotted on map (that is, it should not be plotted at smaller map scales)</td>
+										<td>Data type = float. Prevents crowding on map at small scales and allows display of progressively more data at increasingly larger scales. Null values not permitted; suggest setting default value = 0 ( = display at all scales)</td>
+									</tr>	
+									<tr>
+										<td>MaterialAnalyzed</td>
+										<td>Records material analyzed</td>
+										<td>Examples of values are “wood”, “shell”, “biotite”, “zircon”. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>NumericAge</td>
+										<td>Records interpreted (preferred) age calculated from geochronological analysis (not necessarily date calculated from a single set of measurements)</td>
+										<td>Data type = float. Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>AgePlusError</td>
+										<td>Width of older part of error range</td>
+										<td>Data type = float. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>AgeMinusError</td>
+										<td>Width of younger part of error range</td>
+										<td>Data type = float. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td><span class="magentaBackground">ErrorMeasure</span></td>
+										<td>Measure of error whose values are recorded in AgePlusError and AgeMinusError fields</td>
+										<td>Examples of values are “RMSE”, “1 sigma”, “2 sigma”, “95% confidence interval”. Values must be defined in Glossary table. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td><span class="magentaBackground">AgeUnits</span></td>
+										<td>Units for numeric values in NumericAge, AgePlusError, and AgeMinusError fields</td>
+										<td>Examples of values are “years”, “Ma”, “ka”, “14C yr B.P.”, “calibrated yr B.P.”. Values must be defined in Glossary table. Null values not permitted</td>
+									</tr>		
+									<tr>
+										<td>StationsID</td>
+										<td>Foreign key to Stations point feature class</td>
+										<td>Null values permitted</td>
+									</tr>
+									<tr>
+										<td>LocationSourceID</td>
+										<td>Identifies source of location of this sample. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>
+									<tr>
+										<td>AnalysisSourceID</td>
+										<td>Identifies source of analytical data for this sample. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>
+									<tr>
+										<td>Notes</td>
+										<td>Optional field</td>
+										<td>Free text for additional information specific to this point feature. Null values permitted</td>
+									</tr>								
+									<tr class="border-bottom">
+										<td>GeochronPoints_ID</td>
+										<td>Primary key</td>
+										<td>Examples of values are “GCR1”, “GCR2”. Values must be unique in database. Null values not permitted</td>
+									</tr>							
+								</table>						
+						<p>Analytical data may be represented either by using an ExtendedAttributes table (see NCGMP09 v.1.1 [<a href="https://pubs.usgs.gov/of/2010/1335/pdf/usgs_of2010-1335_NCGMP09.pdf" target="_blank">USGS NCGMP, 2010</a>]) or, if many data are of a single analysis type, by placing them in a user-defined, analysis-specific table such as KArData.</p>
+					<h3 class="h4" id="stations">Stations (Point Feature Class)</h3>
+						<p>If a map author chooses to include station information in a report, we suggest using a Stations feature class that contains the fields listed in table 24 (see also, table 25). Also, having a Stations feature class may be extremely useful during the initial creation of a map database; its contents may later be parsed into separate feature classes if desired.</p>
+							<p class="tableCap"><strong>Table 24.</strong> Fields in Stations (an as-needed point feature class in the GeologicMap feature dataset).<br>
+								<span class="tableSmall">[See also, tables 20, 21, 25]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>
+									<tr>
+										<td>FieldID</td>
+										<td>Station number assigned by person who originally located this station. Commonly, key to field sheet and (or) field notebook</td>
+										<td>Example of value is “DRS09-234”. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>LocationConfidenceMeters</td>
+										<td>Radius (in meters) of positional-uncertainty envelope of this point feature</td>
+										<td>Data type = float. Null values not permitted; recommend setting value = −9 if value is not known (see discussion above in “<a href="content.html#metadata">Feature-Level Metadata</a>”; see also, example values in <a href="content.html#table-1">table 1</a>)</td>
+									</tr>	
+									<tr>
+										<td>ObservedMapUnit</td>
+										<td>Records map unit identified in field (or interpreted from remote sensing) as cropping out at this station (see discussion below). Foreign key to DescriptionOfMapUnits table</td>
+										<td>Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>MapUnit</td>
+										<td>Records map unit in which this station is located on map. Foreign key to DescriptionOfMapUnits table</td>
+										<td>Values obtained by intersection with feature class <a href="required.html#mapunitpoly">MapUnitPolys</a>. Null values permitted only for points outside the extent of MapUnitPolys feature class</td>
+									</tr>	
+									<tr>
+										<td>Symbol</td>
+										<td>References a point symbol</td>
+										<td>Point symbols must be included in accompanying .style file. Null values (which would indicate point data are not shown on map) permitted; if Esri cartographic representations are used to symbolize point data, value may be null</td>
+									</tr>	
+									<tr>
+										<td>Label</td>
+										<td>Describes text label to accompany this station symbol</td>
+										<td>Values typically are FieldID or Stations_ID. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>PlotAtScale</td>
+										<td>Denominator of smallest map scale at which this observation or analysis should be plotted on map (that is, it should not be plotted at smaller map scales)</td>
+										<td>Data type = float. Prevents crowding on map at small scales and allows display of progressively more data at increasingly larger scales. Null values not permitted; suggest setting default value = 0 ( = display at all scales)</td>
+									</tr>	
+									<tr>
+										<td>DataSourceID</td>
+										<td>Identifies source of each data element. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>										
+									<tr>
+										<td>Notes</td>
+										<td>Optional field</td>
+										<td>Free text for additional information specific to this station. Null  values permitted</td>
+									</tr>								
+									<tr class="border-bottom">
+										<td>Stations_ID</td>
+										<td>Primary key</td>
+										<td>Examples of values are “STA1”, “STA2”. Values must be unique in database. Null values not permitted</td>
+									</tr>							
+								</table>
+							<p class="tableCap" id="table-25"><strong>Table 25.</strong> Examples of additional fields that might be included in a Stations point feature class.<br>
+								<span class="tableSmall">[Abbreviations: GPS, Global Positioning System; m, meter(s); N, north; W, west. Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the LocationMethod field) must be defined in Glossary table. See also, tables 20, 21, 24]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>
+									<tr>
+										<td>TimeDate</td>
+										<td>Time and date of observation at this station</td>
+										<td>Example of value is “2018-07-14, 8:19am”. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>Observer</td>
+										<td>Name and affiliation of person who located this station</td>
+										<td>Example of value is “A.B. Geolog, UC Berkeley”. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>SignificantDimensionMeters</td>
+										<td>Significant dimension of exposure (in meters) at this station</td>
+										<td>Data type = float. Values could be thickness of stratigraphic section or depth of auger hole. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td><span class="magentaBackground">LocationMethod</span></td>
+										<td>Technique used to determine this station location</td>
+										<td>Examples of values are “recreational GPS”, “survey grade GPS”, “by inspection”, “by offset”. Values must be defined in Glossary table. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>GPSX</td>
+										<td>Measured GPS coordinate (easting) of this station. May differ from map coordinate because of GPS error or (more likely) base-map error</td>
+										<td>Examples of values are “120.3357 degrees W”, “534667 m”. Nongeographic coordinates should be in same coordinate system as feature class. Null values permitted</td>
+									</tr>
+									<tr>
+										<td>GPSY</td>
+										<td>Measured GPS coordinate (northing) of this station. May differ from map coordinate because of GPS error or (more likely) base-map error</td>
+										<td>Examples of values are “42.4678 degrees N”, “8934667 m”. Nongeographic coordinates should be in same coordinate system as feature class. Null values permitted</td>
+									</tr>									
+									<tr class="border-bottom">
+										<td>PDOP</td>
+										<td>PDOP = Position Dilution Of Precision at this station; estimator of GPS accuracy</td>
+										<td>Data type = float. Values are numeric, &ge;1.0. Null values permitted</td>
+									</tr>							
+								</table>								
+						<p>The ObservedMapUnit field is provided because (1) occasionally a station is located in a geologic unit whose exposure is too small to be distinguished from its surrounding map unit at the scale of mapping, (2) a station may be identified in the field as being located in one map unit and later is reinterpreted as being located in another map unit, or (3) a geologic unit that is observed at a station located at depth (for example, in a pit exposure, a borehole, or a bluff) may not be the same as the map unit that is shown on the geologic map at that location.</p>
+					<h3 class="h4" id="mapunitpoints">MapUnitPoints (Point Feature Class)</h3>
+						<p>Very small, equant or subequant map-unit extents, which are too small to show as polygons at the scale of the map graphic, may be represented as point features. If such point features are present on a map, they should be encoded in the MapUnitPoints feature class. A MapUnitPoints feature class should have an _ID field named MapUnitPoints_ID; other field names, values, and usage should be identical to those shown in <a href="required.html#table-12">table 12</a>, with the addition of the LocationConfidenceMeters, ExistenceConfidence, and PlotAtScale fields (see <a href="#table-20">table 20</a> for definitions and discussion of these three fields).</p>
+		</div>
+		<div class="white-bg">
+            <h2 id="otherExamples">Examples of Other As-Needed Feature Classes</h2>
+					<h3 class="h4" id="geologiclines">GeologicLines (Line Feature Class)</h3>
+						<p>Line features such as the traces of dikes, coal seams, ash beds, other kinds of key beds, fault scarps, anticline and syncline hinge-surface traces, and isograd traces commonly are shown on geologic maps. Such features are usefully represented in a single feature class; alternatively, they could be divided thematically into separate feature classes such as FoldLines, FaultScarpLines, KeyBedLines, DikeLines, and IsogradLines. These line features share the following properties:</p>
+						<ul>
+							<li>They correspond to features that exist within the Earth, and they may be concealed beneath younger, covering material.</li>
+							<li>They are likely to be located with an accuracy that can be estimated.</li>
+							<li>They do not participate in map-unit topology (that is, they do not delineate map-unit polygons).</li>
+						</ul>
+						<p>Table 26 describes the fields (and their values) that populate the GeologicLines feature class.</p>
+							<p class="tableCap"><strong>Table 26.</strong> Fields in GeologicLines (an as-needed line feature class in the GeologicMap feature dataset).<br>
+								<span class="tableSmall">[Abbreviations: N, no; Y, yes. Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the Type, ExistenceConfidence, and IdentityConfidence fields) must be defined in Glossary table]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>
+									<tr>
+										<td><span class="magentaBackground">Type</span></td>
+										<td>Specifies type of line feature represented by this database row</td>
+										<td>Examples of values are “syncline hinge surface trace”, “biotite isograd”. Values must be defined in Glossary table. Null values not permitted</td>
+									</tr>										
+									<tr>
+										<td>IsConcealed</td>
+										<td>Indicates whether this line feature is concealed by an overlying map unit</td>
+										<td>Values = “N” or “Y”. Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>LocationConfidenceMeters</td>
+										<td>Half width (in meters) of positional-uncertainty envelope around this line feature</td>
+										<td>Data type = float. Null values not permitted; recommend setting value = −9 if value is not known (see discussion above in “<a href="content.html#metadata">Feature-Level Metadata</a>” and example values in <a href="content.html#table-1">table 1</a>)</td>
+									</tr>										
+									<tr>
+										<td><span class="magentaBackground">ExistenceConfidence</span></td>
+										<td>Indicates how confidently existence of this line feature has been determined</td>
+										<td>Typical values are “certain”, “questionable”, “unspecified”. Values must be defined in Glossary table. Null values not permitted; suggest setting default value = “certain”</td>
+									</tr>
+									<tr>
+										<td><span class="magentaBackground">IdentityConfidence</span></td>
+										<td>Indicates how confidently this line feature has been identified as a particular type</td>
+										<td>Typical values are “certain”, “questionable”, “unspecified”. Values must be defined in Glossary table. Null values not permitted; suggest setting default value = “certain”</td>
+									</tr>			
+									<tr>
+										<td>Symbol</td>
+										<td>References a line symbol</td>
+										<td>Line symbols must be included in accompanying .style file. Null values (which would indicate lines are not shown on map) permitted; if Esri cartographic representations are used to symbolize lines, value may be null. Determined from values of Type, IsConcealed, LocationConfidenceMeters, ExistenceConfidence, and IdentityConfidence fields, as well as map display scale</td>
+									</tr>
+									<tr>
+										<td>Label</td>
+										<td>Describes text label for this line feature</td>
+										<td>Can be used to store fold name or other easily understood name for line feature. Null values are typical</td>
+									</tr>
+									<tr>
+										<td>DataSourceID</td>
+										<td>Identifies source of each data element. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>
+									<tr>
+										<td>Notes</td>
+										<td>Optional field</td>
+										<td>Free text for additional information specific to this line feature. Null values permitted</td>
+									</tr>									
+									<tr class="border-bottom">
+										<td>GeologicLines_ID</td>
+										<td>Primary key</td>
+										<td>Examples of values are “GEL1”, “GEL2”. Values must be unique in database. Null values not permitted</td>
+									</tr>									
+								</table>						
+						<p>As with the <a href="required.html#contactsandfaults">ContactsAndFaults feature class</a>, some line features may have the same Type values but be symbolized differently. For example, the line features “anticline”, “approximately located anticline”, “concealed anticline”, and “inferred anticline” would all have a Type value = “anticline” but have different values of IsConcealed, LocationConfidenceMeters, ExistenceConfidence, and (or) IdentityConfidence fields and, thus, might be symbolized differently.</p>
+							<h4 class="h5">Topology Rules</h4>
+								<p>The following topology rules would apply to the GeologicLines feature class:</p>
+								<ul>
+									<li>Lines must not self-overlap.</li>
+									<li>Lines must not self-intersect.</li>
+								</ul>								
+					<h3 class="h4" id="mapunitlines">MapUnitLines (Line Feature Class)</h3>
+						<p>Very narrow map-unit extents, which are too small to show as polygons at the scale of the map graphic, may be represented as line features. If such line features are present on a map, they should be encoded in the MapUnitLines feature class. A MapUnitLines feature class should have an _ID field named MapUnitLines_ID; other field names, values, and usage should be identical to those shown in <a href="required.html#table-12">table 12</a>, with the addition of LocationConfidenceMeters, ExistenceConfidence, and PlotAtScale fields (see tables <a href="required.html#table-13">13</a> and <a href="#table-20">20</a> for definitions and discussion of these three fields).</p>
+							<h4 class="h5">Topology Rules</h4>
+								<p>The following topology rules would apply to the MapUnitLines feature class:</p>
+								<ul>
+									<li>Lines must not overlap.</li>
+									<li>Lines must not intersect.</li>
+									<li>Lines must not self-overlap.</li>
+								</ul>							
+					<h3 class="h4" id="cartographiclines">CartographicLines (Line Feature Class)</h3>
+						<p>Some lines on maps (for example, cross-section lines) are cartographic constructs only and have no real-world physical existence, such that values of LocationConfidenceMeters, ExistenceConfidence, and IdentityConfidence attributes are meaningless. Furthermore, they are never shown as concealed beneath a covering unit, and they do not participate in map-unit topology. Table 27 describes the fields (and their values) that populate the CartographicLines feature class.</p>
+							<p class="tableCap"><strong>Table 27.</strong> Fields in CartographicLines (an as-needed line feature class in the GeologicMap feature dataset).<br>
+								<span class="tableSmall">[Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the Type field) must be defined in Glossary table]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>
+									<tr>
+										<td><span class="magentaBackground">Type</span></td>
+										<td>Specifies type of cartographic line feature represented by this database row</td>
+										<td>Example of value is “cross section line”. Values must be defined in Glossary table. Null values not permitted</td>
+									</tr>										
+									<tr>
+										<td>Symbol</td>
+										<td>References a line symbol</td>
+										<td>Line symbols must be included in accompanying .style file. May be determined from value of Type field. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>Label</td>
+										<td>Describes text label for this line feature</td>
+										<td>Can be used to store cross-section designation (for example, “A-A′ ”) or other label for line feature. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>DataSourceID</td>
+										<td>Identifies source of each data element. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>
+									<tr>
+										<td>Notes</td>
+										<td>Optional field</td>
+										<td>Free text for additional information specific to this line feature. Null values permitted</td>
+									</tr>							
+									<tr class="border-bottom">
+										<td>CartographicLines_ID</td>
+										<td>Primary key</td>
+										<td>Examples of values are “CAL1”, “CAL2”. Values must be unique in database. Null values not permitted</td>
+									</tr>									
+								</table>							
+					<h3 class="h4" id="isovaluelines">IsoValueLines (Line Feature Class)</h3>
+						<p>Lines such as structure contours, concentration isopleths, and hydraulic-head contours share certain properties: (1) they have an associated value (for example, elevation, concentration, hydraulic potential) that is a real number, (2) they have a definable uncertainty in their location, and (3) they describe an idealized surface that is not shown as being concealed beneath covering map units. These lines may be represented in the IsoValueLines feature class described in table 28.</p>
+							<p class="tableCap"><strong>Table 28.</strong> Fields in IsoValueLines (an as-needed line feature class in the GeologicMap feature dataset).<br>
+								<span class="tableSmall">[Abbreviations: As, arsenic; ppm, parts per million; Sr, strontium. Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the Type field) must be defined in Glossary table]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>
+									<tr>
+										<td><span class="magentaBackground">Type</span></td>
+										<td>Specifies kind of line feature represented by this database row</td>
+										<td>Examples of values are “top of Big Muddy seam”, “ppm Sr”, “hydraulic potential in Stoneyard aquifer”. Values must be defined in Glossary table; definition must contain units for associated Value and ValueConfidence fields; and Value and ValueConfidence must have same units (for example, for Type = “ppm_As”, values might be Definition = “arsenic concentration in unconfined aquifer; Value and ValueConfidence are in parts per million; ValueConfidence is estimated 1-sigma uncertainty”). Null values not permitted</td>
+									</tr>										
+									<tr>
+										<td>Value</td>
+										<td>Specifies measured value (for example, concentration, elevation, thickness) that pertains to this line feature</td>
+										<td>Date type = float. Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>ValueConfidence</td>
+										<td>Value uncertainty</td>
+										<td>Data type = float. Null values not permitted; recommend setting value = –9 if value is not known (see discussion above in “<a href="content.html#metadata">Feature-Level Metadata</a>”)</td>
+									</tr>	
+									<tr>
+										<td>Symbol</td>
+										<td>References a line symbol</td>
+										<td>Line symbols must be included in accompanying .style file. Typically determined from value of Type field</td>
+									</tr>
+									<tr>
+										<td>Label</td>
+										<td>Describes text label for this line feature</td>
+										<td>Can be used to store label for line feature. Null values are common</td>
+									</tr>	
+									<tr>
+										<td>DataSourceID</td>
+										<td>Identifies source of each data element. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>Notes</td>
+										<td>Optional field</td>
+										<td>Free text for additional information specific to this feature. Null values permitted</td>
+									</tr>										
+									<tr class="border-bottom">
+										<td>IsoValueLines_ID</td>
+										<td>Primary key</td>
+										<td>Examples of values are “IVL1”, “IVL2”. Values must be unique in database. Null values not permitted</td>
+									</tr>									
+								</table>						
+						<p>Note that a ValueConfidence field is used here instead of a LocationConfidenceMeters field; either could be used to specify the real-world locational uncertainty, but, in the case of structure contours (or concentration contours), vertical uncertainty is generally more useful than horizontal uncertainty.</p>
+					<h3 class="h4" id="overlayPoly">Overlay Polygons (the MapUnitOverlayPolys and OverlayPolys Polygon Feature Classes)</h3>
+						<p>Geologic maps sometimes show, in addition to the map-unit polygons, areas of overlying material(s) or some other aspect of earth materials or character (for example, a dike swarm or an alteration zone); such areas may lie entirely within a map-unit polygon, or they may cross over several polygons. On the map graphic, such overlying material commonly is shown by an overlay pattern (for example, diagonal lines or scattered red dots) overprinted onto the map-unit color; the edges of such overlays usually are shown by a scratch boundary (that is, without a bounding line).</p>
+						<p>These overlay polygons are not part of the set of map-unit polygons that cover the map area without gaps or overlaps; thus, they do not belong in the feature class MapUnitPolys. The topological relations among these overlay polygons are likely to be complicated (for example, alteration-zone boundaries usually do not coincide with bedrock-map-unit boundaries, but they can coincide with some faults and with unconsolidated-deposit boundaries). And so, they are not easily prescribed by a simple set of rules; however, they usually fall into one of the following two general categories:</p>
+						<ul>
+							<li>Some overlay polygons are described in the DMU along with the map-unit polygons. For example, in Booth and others (2009), the first four units listed in the DMU (modified land, m; graded areas, gr; artificial fill, af; and landfill debris, afl) are shown as overlay polygons. In the GeMS schema, such overlay polygons should be described in the feature class MapUnitOverlayPolys, in which the MapUnit field references an entry in the DescriptionOfMapUnits table.</li>
+							<li>Some overlay polygons are described in the Explanation of Map Symbols along with other symbols such as contacts and bedding attitudes. For example, in Castor and others (2013), phyllosilicate alteration is shown as a stipple (dot) overlay that is identified in the symbol explanation with the contacts, faults, various vein types, and strike and dip symbols. Unlike modified land in Booth and others (2009), phyllosilicate alteration is not treated as a map unit in Castor and others (2013). In the GeMS schema, such overlay polygons should be described in the feature class OverlayPolys, in which the Type field references an entry in the Glossary table.</li>
+						</ul>
+						<p>If some types of overlay polygons on a map have additional attributes, it may be useful to divide these into multiple feature classes, in which the division is based on the necessary attribute structure. Tables 29 and 30 describe the fields (and their values) that populate the MapUnitOverlayPolys feature class and the OverlayPolys feature class, respectively.</p>
+							<p class="tableCap"><strong>Table 29.</strong> Fields in MapUnitOverlayPolys (an as-needed polygon feature class in the GeologicMap feature dataset).<br>
+								<span class="tableSmall">[Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the IdentityConfidence field) must be defined in Glossary table]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>										
+									<tr>
+										<td>MapUnit</td>
+										<td>Short, easily understood ASCII-character<sup><span class="footnote" data-toggle="modal" data-target="#one">1</span></sup> identifier for map unit represented by this overlay polygon. Foreign key to DescriptionOfMapUnits table</td>
+										<td>Examples of values are “m”, “col”. Values must be defined in <a href="required.html#descriptionOfMapUnits">DescriptionOfMapUnits table</a>. Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td><span class="magentaBackground">IdentityConfidence</span></td>
+										<td>Indicates how confidently this overlay polygon has been identified as a particular map unit</td>
+										<td>Typical values are “certain”, “questionable”, “unspecified”. Values must be defined in Glossary table. Null values not permitted; suggest setting default value = “certain”</td>
+									</tr>									
+									<tr>
+										<td>Label</td>
+										<td>Describes text label for this overlay polygon. Field from which map-unit label is generated</td>
+										<td>May or may not be same as MapUnit value. Allows for special fonts to show geologic age symbols or other non-ASCII characters (see <a href="database-design.html#table-11">table 11</a>). May be determined from values of MapUnit and IdentityConfidence fields. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>Symbol</td>
+										<td>References an area-fill symbol</td>
+										<td>Area-fill symbols (map-unit color, pattern, or color+pattern) must be included in accompanying .style file. Null values permitted. May or may not be same as Symbol value defined for MapUnit in <a href="required.html#descriptionOfMapUnits">DescriptionOfMapUnits table</a></td>
+									</tr>
+									<tr>
+										<td>DataSourceID</td>
+										<td>Identifies source of each data element. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>Notes</td>
+										<td>Optional field</td>
+										<td>Free text for additional information specific to this overlay polygon. Null values permitted</td>
+									</tr>											
+									<tr class="border-bottom">
+										<td>MapUnitOverlayPolys_ID</td>
+										<td>Primary key</td>
+										<td>Examples of values are “MUOP1”, “MUOP2”. Values must be unique in database. Null values not permitted</td>
+									</tr>									
+								</table>	
+							<p class="tableCap"><strong>Table 30.</strong> Fields in OverlayPolys (an as-needed polygon feature class in the GeologicMap feature dataset).<br>
+								<span class="tableSmall">[Content of fields in <span class="magentaBackground">magenta</span> type (in this case, the Type and IdentityConfidence fields) must be defined in Glossary table]</span></p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>
+									<tr>
+										<td><span class="magentaBackground">Type</span></td>
+										<td>Specifies type of polygon feature represented by this database row</td>
+										<td>Example of value is “phyllosilicate alteration”. Values must be defined in Glossary table. Null values not permitted</td>
+									</tr>
+									<tr>
+										<td><span class="magentaBackground">IdentityConfidence</span></td>
+										<td>Indicates how confidently this overlay polygon has been identified as a particular type</td>
+										<td>Typical values are “certain”, “questionable”, “unspecified”. Values must be defined in Glossary table. Null values not permitted; suggest setting default value = “certain”</td>
+									</tr>										
+									<tr>
+										<td>Label</td>
+										<td>Describes text label for this overlay polygon. Field from which map label (if needed) is generated</td>
+										<td>May or may not be same as Type value. Null values permitted (as overlay polygons usually are not labeled, null values are common)</td>
+									</tr>	
+									<tr>
+										<td>Symbol</td>
+										<td>References an area-fill symbol</td>
+										<td>Area-fill symbols (color, pattern, or color+pattern) must be included in accompanying .style file. Null values permitted</td>
+									</tr>	
+									<tr>
+										<td>DataSourceID</td>
+										<td>Identifies source of each data element. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>
+									<tr>
+										<td>Notes</td>
+										<td>Optional field</td>
+										<td>Free text for additional information specific to this overlay polygon. Null values permitted</td>
+									</tr>										
+									<tr class="border-bottom">
+										<td>OverlayPolys_ID</td>
+										<td>Primary key</td>
+										<td>Examples of values are “OVP1”, “OVP2”. Values must be unique in database. Null values not permitted</td>
+									</tr>									
+								</table>									
+							<h4 class="h5">Topology Rules</h4>
+								<p>No topology rules are prescribed for either type of overlay-polygon feature class.</p>
+					<h3 class="h4" id="datasourcepolys">DataSourcePolys (Polygon Feature Class)</h3>
+						<p>For many geologic maps, it is useful or necessary to provide an index map containing polygons that identify the sources of data and interpretations for various parts of the map. Examples of such sources are a previously published map, new mapping, mapping by one of several authors, and mapping using a certain technique (for example, “compiled by A.N. Author (2006) from 1:40,000-scale aerial photographs”). For a map that has only one data source (for example, all new mapping), this feature class would contain one polygon that encompasses the map area. Table 31 describes the fields (and their values) that might populate the DataSourcePolys feature class.</p>
+							<p class="tableCap"><strong>Table 31.</strong> Fields in DataSourcePolys (an as-needed polygon feature class in the GeologicMap feature dataset).</p>
+								<table class="table-bordered other-table">
+									<tr>
+										<th width="10%">Field name</th>
+										<th width="30%">Description</th>
+										<th width="60%">Notes</th>
+									</tr>										
+									<tr>
+										<td>DataSourceID</td>
+										<td>Identifies source or provenance of data elements in this polygon. Foreign key to DataSources table</td>
+										<td>Null values not permitted</td>
+									</tr>	
+									<tr>
+										<td>Notes</td>
+										<td>Optional field</td>
+										<td>Free text for additional information specific to this polygon. Null values permitted</td>
+									</tr>									
+									<tr class="border-bottom">
+										<td>DataSourcePolys_ID</td>
+										<td>Primary key</td>
+										<td>Examples of values are “DSP1”, “DSP2”. Values must be unique in database. Null values not permitted</td>
+									</tr>									
+								</table>						
+							<h4 class="h5">Topology Rules</h4>
+								<p>The following topology rules would apply to a DataSourcePolys polygon feature class:</p>
+								<ul>
+									<li>Polygons may overlap.</li>
+									<li>All parts of the map area should be encompassed by at least one polygon (no gaps).</li>
+								</ul>
+        </div>
+			<div class="yellow-box">
+				<h2>Citation</h2>
+				<div class="hangingIndent">
+					<p>U.S. Geological Survey National Cooperative Geologic Mapping Program, 2020, GeMS (Geologic Map Schema)—A standard format for the digital publication of geologic maps: U.S. Geological Survey Techniques and Methods, book 11, chap. B10, 74 p., <a href="https://doi.org/10.3133/tm11B10" target="_blank">https://doi.org/10.3133/tm11B10</a>.</p>
+				</div>
+			</div>	
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 text-center">     	
+				<p><strong>Links</strong><br>
+					<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">National Geologic Map Database "GeMS" Site</a>
+					<br><a href="https://pubs.er.usgs.gov/publication/tm11B10" target="_blank">GeMS (Geologic Map Schema) Report</a></p>
+                </div>
+				<div class="col-lg-6 text-center">                
+                    <a href="https://www.usgs.gov/" target="_blank"><img src="images/USGSlogo.png" alt="usgs-logo" class="img-fluid my-3 footer-logo mr-4"></a>
+					<a href="https://www.stategeologists.org/" target="_blank"><img src="images/AASGlogo.png" alt="aasg-logo" class="img-fluid my-3 footer-logo"></a>
+                    <p class="mt-3">Copyright © 
+                        <script type="text/javascript">
+                            document.write(new Date().getFullYear());
+                        </script>
+                    </p>
+                </div>
+            
+            </div>
+            
+        </div>        
+    </footer>
+	
+	<div class="modal fade" id="one" tabindex="-1" role="dialog" aria-labelledby="one" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>1</sup>ASCII, American Standard Code for Information Interchange; ASCII characters mainly consist of lower and upper case letters, numerals, and certain punctuation characters (specifically, ones that can be accessed using the Shift key).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<a href="#top">
+        <div id="backup">
+            Back to Top &uarr;
+            <span class="sr-only">Go back to top of page.</span>
+        </div>
+    </a>  
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>  
+	
+	<script>
+    $(document).ready(function(){
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $('#backup:hidden').stop(true, true).fadeIn();
+            } else {
+                $('#backup').stop(true, true).fadeOut();
+            }
+        });
+
+        $('a[href^="#"]').on('click',function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 900, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    });
+    </script>
+	
+  </body>
+
+</html>
