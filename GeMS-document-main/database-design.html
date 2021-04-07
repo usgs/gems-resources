@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="USGS (U.S. Geological Survey) GeMS (Geologic Map Schema)">
+
+    <title>GeMS — Database Design</title>
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/gems.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/lightbox.min.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg text-white fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">GeMS — Geologic Map Schema</a>
+            <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+					<!--Data Dropdown-->
+					<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownDataOne" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Report Breakdown</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownDataOne">
+						<a class="dropdown-item" href="background.html">Background</a>
+						<a class="dropdown-item" href="content.html">Content of a Geologic Map</a>
+						<a class="dropdown-item" href="database-design.html">Database Design</a>
+						<a class="dropdown-item" href="required.html">Required Elements</a>
+						<a class="dropdown-item" href="as-needed.html">As-Needed Elements</a>
+						<a class="dropdown-item" href="symbolization.html">Symbolization</a>
+						<a class="dropdown-item" href="references.html">References</a>
+						<a class="dropdown-item" href="appendices.html">Appendices</a>
+						</div>
+                    </li>				
+					<!--Data Dropdown-->				
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content --> 
+	<header class="business-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 my-sm-4 pt-3 pt-sm-0 background-text">
+                    <h1 class="page-header" id="top">Database Design</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+	<div class="container">
+		<div class="white-bg">
+            <div class="row">
+				<div class="col-lg-6">
+					<h2>Database Design</h2>
+						<p>As with the overall digital data package, some geologic map database elements are required, some are as-needed, and some are optional (fig. 1). <a href="required.html">Required</a> and <a href="as-needed.html">as-needed</a> elements are specified below. Optional elements are described in <a href="appendix-two.html">appendix 2</a>; note that additional optional elements are permitted by this schema. For each element (that is, each feature dataset, feature class, or nonspatial table), we provide a name, identify the element type, and enumerate the fields (attributes) in the relevant table. Unless otherwise noted, all fields are of data type text ( = string). For each field, we briefly discuss content and domains where appropriate. For some elements, this is followed by a short example table and some further discussion.</p>
+						<div class="green-box">
+							<ul class="linkList">
+								<li><strong><a href="#general">General Considerations</a></strong></li>
+								<li><strong><a href="required.html">Required Elements</a></strong></li>
+								<li><strong><a href="as-needed.html">As-Needed Elements</a></strong></li>
+								<li><strong><a href="symbolization.html">Symbolization</a></strong></li>
+								<li><strong><a href="#shapefile">Shapefile Version of the Database</a></strong></li>
+							</ul>
+						</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="centering">
+						<a href="images/figure-one.JPG" class="d-block h-100" data-lightbox="figures" data-title="Figure 1. ArcCatalog view of the contents of a GeMS-structured database, showing required, as-needed, and optional database elements. As-needed elements must be present in the database if they are part of the content of a map report. Optional elements may or may not be present, at the discretion of the author and publisher. Note that the feature dataset for a single cross section is named CrossSectionA; additional cross sections are named CrossSectionB, CrossSectionC, and so on." data-alt="Figure 1.">
+							<img src="images/figure-one.JPG" width="60%" alt="Figure 1" title="Figure 1">
+						</a>
+					</div>
+					<p class="supportList"><strong>Figure 1.</strong> ArcCatalog view of the contents of a GeMS-structured database, showing required, as-needed, and optional database elements. As-needed elements must be present in the database if they are part of the content of a map report. Optional elements may or may not be present, at the discretion of the author and publisher. Note that the feature dataset for a single cross section is named CrossSectionA; additional cross sections are named CrossSectionB, CrossSectionC, and so on. Click the figure to enlarge.</p>
+				</div>
+			</div>
+        </div>
+		<div class="white-bg">
+			<h2 id="general">General Considerations</h2>
+				<h3 class="h4">This Design Uses a Relational Database</h3>
+					<p>This database design relies on relations (joins, or relationship classes) between the various feature classes and nonspatial tables. Examples of these relations include the following (the type of relation is shown in brackets):</p>
+						<ul>
+							<li>From the MapUnit field in <a href="required.html#mapunitpoly">MapUnitPolys feature class</a> to the MapUnit field in <a href="required.html#descriptionOfMapUnits">DescriptionOfMapUnits table</a> [many-to-one].</li>
+							<li>From all <em>xxx</em>SourceID fields (for example, DataSourceID, LocationSourceID, AnalysisSourceID, DefinitionSourceID) in all feature classes and some nonspatial tables to the DataSources_ID field in the <a href="required.html#dataSources">DataSources table</a> [many-to-one].</li>
+							<li>From the Type, ExistenceConfidence, IdentityConfidence, ScientificConfidence fields, etc., in all feature classes and some nonspatial tables to the Term field in the <a href="required.html#glossary">Glossary table</a> [many-to-one].</li>
+						</ul>
+						<p>Figures 2, 3, and 4 show relations among the elements of this database design. (Click the figures to enlarge.)</p>
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="centering">
+									<a href="images/figure-two.JPG" class="d-block h-100" data-lightbox="figures" data-title="Figure 2. Entity-relationship diagram for selected polygon feature classes and associated nonspatial tables, highlighting required and as-needed database elements. Also highlighted are primary keys, values defined in Glossary table, and values defined in DataSources table. Black arrow shows topological relationship between MapUnitPolys and ContactsAndFaults feature classes; blue arrows show other foreign key relationships. Topology rules (bulleted items) are listed for polygons in MapUnitPolys feature class." data-alt="Figure 2.">
+										<img src="images/figure-two.JPG" width="100%" alt="Figure 2" title="Figure 2">
+									</a>
+									<p class="supportList"><strong>Figure 2.</strong> Entity-relationship diagram for selected polygon feature classes and associated nonspatial tables, highlighting required and as-needed database elements. Also highlighted are primary keys, values defined in Glossary table, and values defined in DataSources table. Black arrow shows topological relationship between MapUnitPolys and ContactsAndFaults feature classes; blue arrows show other foreign key relationships. Topology rules (bulleted items) are listed for polygons in MapUnitPolys feature class.</p>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="centering">
+									<a href="images/figure-three.JPG" class="d-block h-100" data-lightbox="figures" data-title="Figure 3. Entity-relationship diagram for selected line feature classes and associated nonspatial tables, highlighting required and as-needed database elements. Also highlighted are primary keys, values defined in Glossary table, and values defined in DataSources table. Black arrow shows topological relationship between ContactsAndFaults and MapUnitPolys feature classes; blue arrow shows other foreign key relationship. Topology rules (bulleted items) are listed for lines in ContactsAndFaults, GeologicLines, and MapUnitLines feature classes." data-alt="Figure 3.">
+										<img src="images/figure-three.JPG" width="100%" alt="Figure 3" title="Figure 3">
+									</a>
+									<p class="supportList"><strong>Figure 3.</strong> Entity-relationship diagram for selected line feature classes and associated nonspatial tables, highlighting required and as-needed database elements. Also highlighted are primary keys, values defined in Glossary table, and values defined in DataSources table. Black arrow shows topological relationship between ContactsAndFaults and MapUnitPolys feature classes; blue arrow shows other foreign key relationship. Topology rules (bulleted items) are listed for lines in ContactsAndFaults, GeologicLines, and MapUnitLines feature classes.</p>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="centering">
+									<a href="images/figure-four.JPG" class="d-block h-100" data-lightbox="figures" data-title="Figure 4. Entity-relationship diagram for selected point feature classes and associated nonspatial tables, highlighting required and as-needed database elements. Also highlighted are primary keys, values defined in Glossary table, and values defined in DataSources table. Blue arrow shows foreign key relationship." data-alt="Figure 4.">
+										<img src="images/figure-four.JPG" width="100%" alt="Figure 4" title="Figure 4">
+									</a>
+									<p class="supportList"><strong>Figure 4.</strong> Entity-relationship diagram for selected point feature classes and associated nonspatial tables, highlighting required and as-needed database elements. Also highlighted are primary keys, values defined in Glossary table, and values defined in DataSources table. Blue arrow shows foreign key relationship.</p>
+								</div>
+							</div>							
+						</div>
+				<h3 class="h4" id="fieldHygiene">Field Hygiene</h3>
+					<ul>
+						<li>GeMS does not, in general, prescribe the lengths of text fields; field lengths need to be long enough to encompass all values but short enough to not unduly inflate the size of the database.</li>
+						<li>It is important that required fields not be deleted, even if all values in the field are null (that is, they have no content). Deletion of required fields would create unnecessary ambiguity: questions such as <em>“Is this a GeMS-compliant database?”</em> or <em>“Is the database incomplete or corrupted?”</em> would certainly arise.</li>
+						<li>When a particular instance (row value) of a field is intended to have no content, it should be set to &lt;null&gt; if the underlying database software supports an explicit &lt;null&gt; value. If the software does not support a &lt;null&gt; value, then enter a text string: use “&num;null” for text fields that are long (that is, &ge;5 characters); use “&num;” for short (&lt;5 characters) text fields. For numeric fields, do not use 0; use either −9 or −9999 (but be consistent; do not use both −9 and −9999 for null values in the same numeric field).</li>
+						<li>Fields should not be repurposed to hold other types of information. To store other attribute information in a table, you must add other fields. As noted below, such extensions to the GeMS database schema are encouraged.</li>
+						<li>The values in certain fields must be defined in the Glossary table. These fields are highlighted in <span class="magentaBackground">magenta</span> bold type in the tables that follow. <em>(See <a href="required.html">Required Elements</a> and <a href="as-needed.html">As-Needed Elements</a> pages.)</em></li>
+						<li>For most feature classes, a Notes field is prescribed; however, populating this field is always optional, and it may be omitted if desired.</li>
+						<li>All feature classes and nonspatial tables contain a primary key field that has a name in the form of <em>TableName</em>_ID. When values of this primary key populate a field in another feature class or nonspatial table, that field must have a different name. For example, values of DataSources_ID populate fields named DescriptionSourceID (in the DescriptionOfMapUnits table), LocationSourceID (in point data tables), and DataSourceID (in many tables). Tables 6, 7, 8, and 9 show examples of these relations in various data tables.</li>
+					</ul>
+					<p>Note that, for the foliation measurement example in table 9 (OrientationPoints_ID = “ORP02”), the location was determined by one worker (LocationSourceID = “DAS4”), and the orientation of foliation was measured by another (OrientationSourceID = “DAS3”). The map author chose to list these as two separate sources in the DataSources table (see table 6). Alternatively, the author could have chosen to combine both OrientationSourceID and LocationSourceID into a third source, for example, “DAS5” (Source = “fieldwork by A.B. Geolog and C.D. Nagt, 2014”; see table 6). See further discussion in the “DataSources (Nonspatial Table)” section below.</p>
+					<p>If data loaded into the database do not already have user-managed primary keys, we suggest that primary key values be created from a three-letter prefix that is based on an abbreviation of the name of the containing table (for example, in the MapUnitPolys feature class, use the abbreviation “MUP” as the prefix for values of MapUnitPolys_ID [see <a href="required.html#table-12">table 12</a>]; in the ContactsAndFaults feature class, use “CAF” for values of ContactsAndFaults_ID [see <a href="required.html#table-13">table 13</a>]), combined with an integer suffix that is unique in the containing table. The suffix could be the text representation of the Esri database-maintained ObjectID that is included in all feature classes and nonspatial tables (for example, a row that has ObjectID = 27 in the MapUnitPolys feature class could have MapUnitPolys_ID = “MUP027”). Following this pattern provides unique identifiers for all features within the database as well as easily understood foreign keys.</p>
+					
+						<p class="tableCap" id="table-6"><strong>Table 6.</strong> Examples of selected fields (and their values) in a <a href="required.html#dataSources">DataSources table</a>.<br>
+						<span class="tableSmall">[See also, tables <a href="required.html#table-15">15</a>, <a href="required.html#table-16">16</a>]</span></p>
+						<table class="table-bordered other-table">
+							<tr class="border-bottom-white">
+								<th colspan="3">Field name</th>
+							</tr>
+							<tr>
+								<th width="40%">Source</th>
+								<th width="40%">Notes</th>
+								<th width="10%">DataSources_ID</th>
+							</tr>
+							<tr>
+								<td>this report</td>
+								<td>&lt;null&gt;</td>
+								<td>DAS1</td>
+							</tr>
+							<tr>
+								<td>Smith, J.G., 1899</td>
+								<td>Smith, J.G., 1899, Geologic map of XYZ quadrangle: USGS GQ 9999, scale 1:125,000. Georeferenced and digitized by authors of this report</td>
+								<td>DAS2</td>
+							</tr>
+							<tr>
+								<td>fieldwork by A.B. Geolog, 2012-2015</td>
+								<td>&lt;null&gt;</td>
+								<td>DAS3</td>
+							</tr>
+							<tr>
+								<td>fieldwork by C.D. Nagt, 2014</td>
+								<td>&lt;null&gt;</td>
+								<td>DAS4</td>
+							</tr>
+							<tr class="border-bottom">
+								<td>fieldwork by A.B. Geolog and C.D. Nagt, 2014</td>
+								<td>&lt;null&gt;</td>
+								<td>DAS5</td>
+							</tr>							
+						</table>
+					
+						<p class="tableCap" id="table-7"><strong>Table 7.</strong> Examples of selected fields (and their values) in a <a href="required.html#descriptionOfMapUnits">DescriptionOfMapUnits table</a>.<br>
+						<span class="tableSmall">[See also, <a href="required.html#table-14">table 14</a>]</span></p>
+						<table class="table-bordered other-table">
+							<tr class="border-bottom-white">
+								<th colspan="4">Field name</th>
+							</tr>
+							<tr>
+								<th width="25%">MapUnit</th>
+								<th width="25%">Name</th>
+								<th width="25%">DescriptionSourceID</th>
+								<th width="25%">DescriptionOfMapUnits_ID</th>
+							</tr>
+							<tr>
+								<td>Qal</td>
+								<td>Alluvium</td>
+								<td>DAS1</td>
+								<td>DMU1</td>
+							</tr>
+							<tr>
+								<td>Qgd</td>
+								<td>Glacial drift</td>
+								<td>DAS1</td>
+								<td>DMU2</td>
+							</tr>
+							<tr class="border-bottom">
+								<td>Trg</td>
+								<td>Triassic granitic rocks</td>
+								<td>DAS1</td>
+								<td>DMU3</td>
+							</tr>							
+						</table>					
+					
+						<p class="tableCap" id="table-8"><strong>Table 8.</strong> Examples of selected fields (and their values) in a <a href="required.html#contactsandfaults">ContactsAndFaults feature class</a>.<br>
+						<span class="tableSmall">[Abbreviations: N, no; Y, yes. See also, <a href="required.html#table-13">table 13</a>]</span></p>
+						<table class="table-bordered other-table">
+							<tr class="border-bottom-white">
+								<th colspan="4">Field name</th>
+							</tr>
+							<tr>
+								<th width="25%">Type</th>
+								<th width="25%">IsConcealed</th>
+								<th width="25%">DataSourceID</th>
+								<th width="25%">ContactsAndFaults_ID</th>
+							</tr>
+							<tr>
+								<td>contact</td>
+								<td>N</td>
+								<td>DAS1</td>
+								<td>CAF001</td>
+							</tr>
+							<tr class="border-bottom">
+								<td>thrust fault</td>
+								<td>Y</td>
+								<td>DAS2</td>
+								<td>CAF002</td>
+							</tr>							
+						</table>
+						
+						<p class="tableCap"><strong>Table 9.</strong> Examples of selected fields (and their values) in an <a href="as-needed.html#orientationpoints">OrientationPoints feature class</a>.<br>
+						<span class="tableSmall">[See also, <a href="as-needed.html#table-22">table 22</a>]</span></p>
+						<table class="table-bordered other-table">
+							<tr class="border-bottom-white">
+								<th colspan="5">Field name</th>
+							</tr>
+							<tr>
+								<th width="20%">Type</th>
+								<th width="20%">Azimuth</th>
+								<th width="20%">LocationSourceID</th>
+								<th width="20%">OrientationSourceID</th>
+								<th width="20%">OrientationPoints_ID</th>
+							</tr>
+							<tr>
+								<td>bedding</td>
+								<td>73</td>
+								<td>DAS3</td>
+								<td>DAS3</td>
+								<td>ORP01</td>
+							</tr>
+							<tr class="border-bottom">
+								<td>foliation</td>
+								<td>120</td>
+								<td>DAS4</td>
+								<td>DAS3</td>
+								<td>ORP02</td>
+							</tr>							
+						</table>						
+
+				<h3 class="h4" id="typeFields">Type, MapUnit, Label, and Symbol Fields</h3>
+					<p>Most feature classes in the GeMS schema contain the fields Type, Label, and Symbol; however, the <a href="required.html#mapunitpoly">MapUnitPolys polygon feature class</a> contains the field MapUnit in lieu of the Type field, as discussed below (see tables 10 and 11 for examples):</p>
+					<ul>
+						<li>The Type field specifies what kind of feature is represented (see table 10). For example, a line within the ContactsAndFaults feature class could be a “contact”, “thrust fault”, or “water boundary”; a point within a GeochronPoints feature class could represent the location of a potassium-argon date.</li>
+						<li>The MapUnit field in the MapUnitPolys feature class (see table 11) is the equivalent of the Type field in other feature classes, in that it specifies what map unit is represented (for example, “Qal”, “Tg”, “Ks”, “Trdu”). The value of MapUnit is commonly an ASCII-character<sup><span class="footnote" data-toggle="modal" data-target="#twelve">12</span></sup> equivalent of the map-unit label; see discussion of the Label field below.</li> 
+						<li>The Label field contains the desired annotation for a feature: the annotation may be simple text (for example, “SAN ANDREAS FAULT”, “14 Ma”), or— in the MapUnitPolys feature class—it is an ASCIIcharacter equivalent of the map-unit label; it may have the same value as MapUnit (for example, “Qal”) and have an appended “?” if IdentityConfidence is “questionable”, but it will differ if a special font is used for geologic age symbols (for example, “&Hat;du”, which results in the map-unit symbol <img src="images/TriassicSymboldu.JPG" alt="Triassic Symbol"> when displayed with the FGDCGeoAge font; see table 11).</li>
+						<li>The Symbol field specifies either a point symbol (sometimes called a marker symbol), a line symbol, or an area-fill symbol (a color and (or) pattern fill) for the feature (for example, a dot for a potassium-argon age locality; a heavy black line for a fault; a pale-yellow color fill for a polygon of alluvium) (see tables 10 and 11).</li>
+					</ul>
+					
+						<p class="tableCap" id="table-10"><strong>Table 10.</strong> Examples of values in the Type, Symbol, and Label fields in a point feature class and the resulting map images.<br>
+						<span class="tableSmall">[See also, table 11]</span></p>
+						<table class="table-bordered">
+							<tr>
+								<th colspan="3" style="border:1px solid black;">Database field name<sup><span class="footnote" data-toggle="modal" data-target="#one">1</span></sup></th>
+								<th colspan="2" style="border:1px solid black;">Map image</th>
+							</tr>
+							<tr>
+								<th width="30%" style="border:1px solid black;">Type</th>
+								<th width="20%" style="border:1px solid black;">Symbol<sup><span class="footnote" data-toggle="modal" data-target="#two">2</span></sup></th>
+								<th width="15%" style="border:1px solid black;">Label</th>
+								<th width="20%" style="border:1px solid black;">Symbol</th>
+								<th width="15%" style="border:1px solid black;">Label<sup><span class="footnote" data-toggle="modal" data-target="#three">3</span></sup></th>
+							</tr>
+							<tr>
+								<td style="border:1px solid black;">radiocarbon</td>
+								<td style="border:1px solid black; text-align:center;">31.21</td>
+								<td style="border:1px solid black; text-align:center;">14,020&#177;45<sup>[<span class="footnote" data-toggle="modal" data-target="#four">4</span>]</sup></td>
+								<td style="border:1px solid black; text-align:center;">&#8226;</td>
+								<td style="border:1px solid black; text-align:center;">14,020&#177;45</td>
+							</tr>	
+							<tr>
+								<td style="border:1px solid black;">inclined upright bedding</td>
+								<td style="border:1px solid black; text-align:center;">06.13</td>
+								<td style="border:1px solid black; text-align:center;">30<sup>[<span class="footnote" data-toggle="modal" data-target="#five">5</span>]</sup></td>
+								<td style="border:1px solid black; text-align:center;"><img src="images/inclinedUprightBedding.JPG"></td>
+								<td style="border:1px solid black; text-align:center;">30</td>
+							</tr>	
+							<tr>
+								<td style="border:1px solid black;">vertical bedding</td>
+								<td style="border:1px solid black; text-align:center;">06.03</td>
+								<td style="border:1px solid black; text-align:center;">&lt;null&gt;<sup>[<span class="footnote" data-toggle="modal" data-target="#six">6</span>]</sup></td>
+								<td style="border:1px solid black; text-align:center;"><img src="images/verticalBedding.JPG"></td>
+								<td style="border:1px solid black;"></td>
+							</tr>								
+						</table>
+
+						<p class="tableCap" id="table-11"><strong>Table 11.</strong> Examples of values in the MapUnit, IdentityConfidence, Symbol, and Label fields in the MapUnitPolys feature class and the resulting map images. <br>
+						<span class="tableSmall">[See also, tables 10, 12]</span></p>
+						<table class="table-bordered">
+							<tr>
+								<th colspan="4" style="border:1px solid black;">Database field name<sup><span class="footnote" data-toggle="modal" data-target="#one">1</span></sup></th>
+								<th colspan="2" style="border:1px solid black;">Map image</th>
+							</tr>
+							<tr>
+								<th width="10%" style="border:1px solid black;">MapUnit</th>
+								<th width="20%" style="border:1px solid black;">IdentityConfidence</th>
+								<th width="15%" style="border:1px solid black;">Symbol<sup><span class="footnote" data-toggle="modal" data-target="#twotwo">2</span></sup></th>
+								<th width="20%" style="border:1px solid black;">Label<sup><span class="footnote" data-toggle="modal" data-target="#threethree">3</span></sup></th>
+								<th width="10%" style="border:1px solid black;">Symbol</th>
+								<th width="25%" style="border:1px solid black;">Label<sup><span class="footnote" data-toggle="modal" data-target="#fourfour">4</span></sup></th>
+							</tr>
+							<tr>
+								<td style="border:1px solid black;">Qal</td>
+								<td style="border:1px solid black;">certain</td>
+								<td style="border:1px solid black; text-align:center;">60</td>
+								<td style="border:1px solid black; text-align:center;">Qal</td>
+								<td style="border:1px solid black; background-color:#faf6ac;"></td>
+								<td style="border:1px solid black; text-align:center;">Qal</td>
+							</tr>	
+							<tr>
+								<td style="border:1px solid black;">Trdu<sup>[<span class="footnote" data-toggle="modal" data-target="#fivefive">5</span>, <span class="footnote" data-toggle="modal" data-target="#sixsix">6</span>]</sup></td>
+								<td style="border:1px solid black;">certain</td>
+								<td style="border:1px solid black; text-align:center;">730</td>
+								<td style="border:1px solid black; text-align:center;">&#94;du<sup>[<span class="footnote" data-toggle="modal" data-target="#seven">7</span>]</sup></td>
+								<td style="border:1px solid black; background-color:#4dbdb7;"></td>
+								<td style="border:1px solid black; text-align:center;"><img src="images/TriassicSymboldu.JPG" alt="Triassic Symbol"></td>
+							</tr>	
+							<tr>
+								<td style="border:1px solid black;">Qls</td>
+								<td style="border:1px solid black;">questionable</td>
+								<td style="border:1px solid black; text-align:center;">90</td>
+								<td style="border:1px solid black; text-align:center;">Qls?<sup>[<span class="footnote" data-toggle="modal" data-target="#eight">8</span>]</sup></td>
+								<td style="border:1px solid black; background-color:#fcfc19;"></td>
+								<td style="border:1px solid black; text-align:center;">Qls?</td>
+							</tr>								
+						</table>
+					
+					<p>This three-fold division of what, at first glance, may seem to be one entity is necessary because (1) it is desirable for the database to provide a preferred visualization of the map data, and (2) there generally is not a one-to-one correspondence between values of Type (or MapUnit), Symbol, and Label:</p>
+					<ul>
+						<li>For MapUnitPolys, values of Label will differ from those of MapUnit when special symbols are used to specify geologic ages (for example, the Label value of “&Hat;du”, which results in the map-unit symbol <img src="images/TriassicSymboldu.JPG" alt="Triassic Symbol"> when displayed with the FGDCGeoAge font, is different from the MapUnit value of “Trdu”; see table 11).</li>
+						<li>For MapUnitPolys, values of Label may also reflect values of the IdentityConfidence field (that is, queries may be added).</li>
+						<li>For lines in <a href="required.html#contactsandfaults">ContactsAndFaults</a>, values of Symbol typically reflect the combination of values of Type, IsConcealed, and the confidence fields.</li>
+						<li>Faults that have the same Type value likely will have different names (for example, “San Andreas Fault”, “Hayward Fault”) and, thus, different values of Label.</li>
+					</ul>
+				<h3 class="h4" id="whatWhere">Polygons, Lines, and Topology—What Goes Where?</h3>
+					<p>By convention, a geologic map depicts the distribution of earth materials on a particular map horizon, usually the Earth’s surface. <a href="required.html#mapunitpoly">Map-unit polygons</a> (which can also include areas of open water, permanent snowfields, glaciers, and unmapped areas) are bounded by contacts, faults, shorelines, snowfield or glacier boundaries, scratch boundaries (that is, boundaries for which no line is drawn), and (or) the map boundary. Contacts do not normally separate polygons of the same map unit, although faults commonly do. In addition, a map-unit polygon may be partly bisected by a fault whose trace terminates within that polygon (that is, a dangling fault in GIS jargon).</p>
+					<p>The distribution of units on a particular map is recorded in the polygon feature class <a href="required.html#mapunitpoly">MapUnitPolys</a>. Contacts that separate map units, faults that bound map units, and dangling faults are recorded in the line feature class <a href="required.html#contactsandfaults">ContactsAndFaults</a>. Elements of these feature classes are involved in topological relations that are described below. Elements are assigned to these feature classes to simplify enforcement of topological relations when constructing a database, as well as to facilitate topological queries when using the database.</p>
+					<p>Some maps show contacts and faults that are concealed beneath covering map units (for example, beneath thin surficial deposits or open water). These concealed contacts and faults are recorded in the line feature class <a href="required.html#contactsandfaults">ContactsAndFaults</a>, and their concealed status should be encoded as IsConcealed = “Y”. Such concealed contacts and faults may or may not be involved in topology with MapUnit polygons; in addition, concealed contacts and faults may dangle.</p>
+					<p>Many geologic maps contain other feature classes that are not involved fully in map topology (for example, fossil localities, fold axes, or bedding-orientation measurements). Feature classes for such features are described in the “<a href="as-needed.html">As-Needed Elements</a>” section below.</p>
+					<p>Some database producers may choose to create polygons and edit linework in the absence of a topology relationship class. For instance, rather than using the topology editing tools to synchronously edit boundaries that are shared between line and polygon feature classes, users may prefer to create the line features (boundaries) first and then construct the polygons as (or after) their bounding lines are finished. For the purposes of this data-delivery design, the method used to produce the feature classes does not matter; it only matters that the feature classes in the published database follow the topology rules outlined for each feature class.</p>
+				<h3 class="h4" id="directionalLines">Directional Lines</h3>
+					<p>Many types of geologic lines have directionality, equivalent to handedness. Examples are thrust faults, which (by convention) have sawteeth on the side of the upper (overlying) plate, and normal faults, which (also by convention) have half-circle or ball-and-bar decorations on the downthrown (overlying) side of the fault. The direction that the decorations point indicates the geometry of that feature.</p>
+					<p>To preserve this directionality in the database, we subscribe to the right-hand rule for such line features: that is, lines should be created or edited such that the decoration points to the right while one travels from the start of the line segment to its end. In the case of up-down (U–D) notation on faults, the direction that has the right side of the fault in the down (D) direction should be considered as the right-hand direction.</p>
+		</div>
+		<div class="white-bg">
+			<h2 id="shapefile">Shapefile Version of the Database</h2>
+				<p>To make database content available without the requirement of having an ArcGIS license, now or in the future, an open shapefile version of the database is required. This version uses the well-documented shapefile and .dbf formats, which have length limitations of fields (must have ≤255 characters) and field names (must be ≤10 characters).</p>
+				<p>The open shapefile version should include the following elements:</p>
+				<ul>
+					<li>A shapefile for each feature class.</li>
+					<li>A .dbf file for each nonspatial table.</li>
+					<li>For each feature class or nonspatial table that originally contained long (>255 characters) fields, a text file that documents the original contents of the long (now shortened) fields.</li>
+					<li>A text file that documents (1) the arrangement of feature classes into feature datasets, (2) the translation of feature class names to shapefile names, (3) the translation of nonspatial table names to .dbf file names, and (4) the translation of long field names to shortened field names.</li>
+				</ul>
+				<p>The script <em>GeMS_TranslateToShape_Arc10.py</em> or its replacement (available at <a href="https://github.com/usgs/GeMS_Tools" target="_blank">https://github.com/usgs/GeMS_Tools</a> and at <a href="https://github.com/usgs/gems-tools-pro" target="_blank">https://github.com/usgs/gems-tools-pro</a>) automates the creation of this open shapefile version. The script also creates a simple shapefile version of the database that has truncated content and no related tables (that is, no Glossary, DescriptionOfMapUnits, DataSources, or GeoMaterialDict tables).</p>
+		</div>
+			<div class="yellow-box">
+				<h2>Citation</h2>
+				<div class="hangingIndent">
+					<p>U.S. Geological Survey National Cooperative Geologic Mapping Program, 2020, GeMS (Geologic Map Schema)—A standard format for the digital publication of geologic maps: U.S. Geological Survey Techniques and Methods, book 11, chap. B10, 74 p., <a href="https://doi.org/10.3133/tm11B10" target="_blank">https://doi.org/10.3133/tm11B10</a>.</p>
+				</div>
+			</div>	
+     </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 text-center">     	
+				<p><strong>Links</strong><br>
+					<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">National Geologic Map Database "GeMS" Site</a>
+					<br><a href="https://pubs.er.usgs.gov/publication/tm11B10" target="_blank">GeMS (Geologic Map Schema) Report</a></p>
+                </div>
+				<div class="col-lg-6 text-center">                
+                    <a href="https://www.usgs.gov/" target="_blank"><img src="images/USGSlogo.png" alt="usgs-logo" class="img-fluid my-3 footer-logo mr-4"></a>
+					<a href="https://www.stategeologists.org/" target="_blank"><img src="images/AASGlogo.png" alt="aasg-logo" class="img-fluid my-3 footer-logo"></a>
+                    <p class="mt-3">Copyright © 
+                        <script type="text/javascript">
+                            document.write(new Date().getFullYear());
+                        </script>
+                    </p>
+                </div>
+            
+            </div>
+            
+        </div>        
+    </footer>
+
+	<div class="modal fade" id="one" tabindex="-1" role="dialog" aria-labelledby="one" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>1</sup>All values in the database fields are of data type = text.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="two" tabindex="-1" role="dialog" aria-labelledby="two" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>2</sup>Values are indices to symbols chosen from the Geological Survey of Canada’s implementation of the FGDC standard (Federal Geographic Data Committee, 2006) as an Esri style (Everett and Dohar, 2012). This .style file is available under the Resources heading at the GeMS website (<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">https://ngmdb.usgs.gov/Info/standards/GeMS/</a>).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="twotwo" tabindex="-1" role="dialog" aria-labelledby="twotwo" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>2</sup>Values are indices to colors selected from the FGDC cartographic standard’s CMYK Color Chart (Federal Geographic Data Committee, 2006). An ArcGIS .style file (“FGDCcmyk.style”) of this chart is available under the Resources heading at the GeMS website (<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">https://ngmdb.usgs.gov/Info/standards/GeMS/</a>).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="threethree" tabindex="-1" role="dialog" aria-labelledby="threethree" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>3</sup>For improved legibility, sizes of map-image labels shown here are larger than would appear on a map.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>		
+	<div class="modal fade" id="three" tabindex="-1" role="dialog" aria-labelledby="three" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>3</sup>Values are determined from the IdentityConfidence value in the MapUnitPolys feature class combined with the corresponding value of Label in the DescriptionOfMapUnits table.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="four" tabindex="-1" role="dialog" aria-labelledby="four" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>4</sup>In this example, the value in the Label field (radiocarbon age, in years before present) is calculated from values in the NumericalAge, AgePlusError, and AgeMinusError fields in the GeochronPoints feature class.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="fourfour" tabindex="-1" role="dialog" aria-labelledby="fourfour" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>4</sup>Map-image labels are displayed using the FGDCGeoAge font (U.S. Geological Survey, 2006; available at <a href="https://pubs.usgs.gov/tm/2006/11A02/" target="_blank">https://pubs.usgs.gov/tm/2006/11A02/</a>). An OpenType version (“FGDCGeoAge.otf”) of this font is available under the Resources heading at the GeMS website (<a href="https://ngmdb.usgs.gov/Info/standards/GeMS/" target="_blank">https://ngmdb.usgs.gov/Info/standards/GeMS/</a>). For improved legibility, sizes of map-image labels shown here are larger than normally would appear on a map.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="five" tabindex="-1" role="dialog" aria-labelledby="five" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>5</sup>In this example, the value in the Label field (dip of inclined bedding) is derived from the Inclination field in the OrientationPoints feature class.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="fivefive" tabindex="-1" role="dialog" aria-labelledby="fivefive" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>5</sup>“Tr” is an easily understood ASCII-character identifier for the geologic age symbol <img src="images/TriassicSymbol.JPG" alt="Triassic Symbol"> (= Triassic).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="six" tabindex="-1" role="dialog" aria-labelledby="six" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>6</sup>In this example, the value in the Label field is <null> because no dip value is labeled on the map (vertical bedding, by definition, has a vertical dip of 90&#176;; by convention, a vertical [90&#176;] dip is not labeled on the map).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="sixsix" tabindex="-1" role="dialog" aria-labelledby="sixsix" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>6</sup>ASCII, American Standard Code for Information Interchange; ASCII characters mainly consist of lower and upper case letters, numerals, and certain punctuation characters (specifically, ones that can be accessed using the Shift key).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>		
+	<div class="modal fade" id="seven" tabindex="-1" role="dialog" aria-labelledby="seven" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>7</sup>Character “&#94;” (Shift–6) in the FGDCGeoAge font results in the geologic age symbol <img src="images/TriassicSymbol.JPG" alt="Triassic Symbol"> (= Triassic).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>		
+	<div class="modal fade" id="eight" tabindex="-1" role="dialog" aria-labelledby="eight" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>8</sup>If IdentityConfidence = “questionable”, then “?” should be appended to the Label value.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<div class="modal fade" id="twelve" tabindex="-1" role="dialog" aria-labelledby="twelve" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><sup>12</sup>ASCII, American Standard Code for Information Interchange; ASCII characters mainly consist of lower and upper case letters, numerals, and certain punctuation characters (specifically, ones that can be accessed using the Shift key).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	
+	<a href="#top">
+        <div id="backup">
+            Back to Top &uarr;
+            <span class="sr-only">Go back to top of page.</span>
+        </div>
+    </a>  
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>  
+	<script src="js/lightbox.min.js"></script>
+	
+	<script>
+    $(document).ready(function(){
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $('#backup:hidden').stop(true, true).fadeIn();
+            } else {
+                $('#backup').stop(true, true).fadeOut();
+            }
+        });
+
+        $('a[href^="#"]').on('click',function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 900, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    });
+    </script>
+	
+  </body>
+
+</html>
